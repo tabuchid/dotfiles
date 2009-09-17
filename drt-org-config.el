@@ -1,0 +1,13 @@
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+(setq org-directory "~/org/")
+(setq org-default-notes-file "~/org/remember.org")
+(setq remember-annotation-functions '(org-remember-annotation))
+(setq remember-handler-functions '(org-remember-handler))
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+(define-key global-map "\C-cr" 'org-remember)
+(setq org-agenda-files (list "~/org/work.org"
+                             "~/org/home.org"))
+(provide 'drt-org-config)
