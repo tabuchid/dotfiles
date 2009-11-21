@@ -1,7 +1,7 @@
+(require 'term)
 (defun at ()
       (interactive)
       (ansi-term "bash" "localhost"))
-(require 'term)
 ;; Use this for remote so I can specify command line arguments
 (defun remote-term (new-buffer-name cmd &rest switches)
   (setq term-ansi-buffer-name (concat "*" new-buffer-name "*"))
@@ -24,4 +24,5 @@
 (defun doug ()
   (interactive) 
   (remote-term "doug" "ssh" "tabuchid@dougtabuchi.com"))
+
 (provide 'drt-term)

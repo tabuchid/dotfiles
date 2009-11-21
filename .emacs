@@ -25,7 +25,6 @@
 ;;   51 Franklin Street, Fifth Floor
 ;;   Boston, MA 02110-1301
 ;;   USA
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -36,9 +35,7 @@
   ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(current-language-environment "UTF-8")
- '(ecb-options-version "2.40")
  '(inhibit-startup-screen t)
- '(org-agenda-files (quote ("~/org/work.org" "~/org/home.org")))
  '(show-paren-mode t)
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
  '(tool-bar-mode nil)
@@ -50,12 +47,10 @@
   ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#2e3436" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :family "apple-monaco")))))
 
-(add-to-list 'load-path "~/elisp")
-(add-to-list 'load-path "~/python-mode")
-(add-to-list 'load-path "~/elisp/ecb-2.40")
-(add-to-list 'load-path "~/elisp/remember")
-(setq ipython-command "/snapscores.com/bin/ipython")
-(require 'ipython)
+(add-to-list 'load-path "~/dotfiles")
+;(add-to-list 'load-path "~/dotfiles/ecb-2.40")
+(add-to-list 'load-path "~/dotfiles/remember")
+
 (require 'erc)
 (require 'drt-selftest)
 (require 'drt-term)
@@ -64,8 +59,8 @@
 (require 'drt-misc)
 (require 'org)
 (require 'drt-org-config)
-(require 'ecb)
 (require 'midnight)
+(require 'maxframe)
 (require 'ido)
 (require 'remember)
  
