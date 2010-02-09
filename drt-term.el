@@ -17,6 +17,13 @@
   (interactive) 
   (remote-term "stage" "ssh" "stage"))
 
+(defun web1 ()
+  (interactive) 
+  (remote-term "web1" "ssh" "web1"))
+
+(defun web2 ()
+  (interactive) 
+  (remote-term "web2" "ssh" "web2"))
 (defun assets ()
   (interactive) 
   (remote-term "assets" "ssh" "assets.fanfeedr.com"))
@@ -24,5 +31,9 @@
 (defun doug ()
   (interactive) 
   (remote-term "doug" "ssh" "tabuchid@dougtabuchi.com"))
+
+(defun drt-fc12 ()
+  (interactive) 
+  (remote-term "drt-fc12" "ssh" "drt-fc12.local"))
 
 (provide 'drt-term)

@@ -6,8 +6,8 @@ export PATH=/Library/PostgreSQL/8.4/bin:$PATH
 
 alias emacs='emacs -nw'
 
-unset HISTSIZE
-unset HISTFILESIZE 
+export HISTSIZE=5000
+export HISTFILESIZE=5000
 export HISTCONTROL=erasedups
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 shopt -s histappend
