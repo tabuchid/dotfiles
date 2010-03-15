@@ -11,3 +11,8 @@ export HISTFILESIZE=5000
 export HISTCONTROL=erasedups
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 shopt -s histappend
+
+export WORKON_HOME=$HOME/.virtualenvs
+source /Library/Frameworks/Python.framework/Versions/2.6/bin/virtualenvwrapper_bashrc
+
+

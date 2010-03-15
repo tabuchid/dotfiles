@@ -1,0 +1,7 @@
+data/.hgignore.i
+data/.hgsigs.i
+data/.hgtags.i
+data/ez_setup.py.i
+data/paste.py.i
+data/pastemacs.py.i
+data/setup.py.i

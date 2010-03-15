@@ -1,4 +1,15 @@
 (require 'term)
+(defun visit-ansi-term ()
+  "If we are in an *ansi-term*, rename it.
+If there is no *ansi-term*, run it.
+If there is one running, switch to that buffer."
+  (interactive)
+  (if (equal "*ansi-term*" (buffer-name))
+      (call-interactively 'rename-buffer)
+      (if (get-buffer "*ansi-term*")
+   (switch-to-buffer "*ansi-term*")
+   (ansi-term "/bin/bash"))))
+(global-set-key (kbd "<f2>") 'visit-ansi-term)
 (defun at ()
       (interactive)
       (ansi-term "bash" "localhost"))
@@ -16,6 +27,14 @@
 (defun stage ()
   (interactive) 
   (remote-term "stage" "ssh" "stage"))
+
+(defun dev ()
+  (interactive) 
+  (remote-term "dev" "ssh" "dev.fanfeedr.com"))
+
+(defun test ()
+  (interactive) 
+  (remote-term "dev" "ssh" "test.fanfeedr.com"))
 
 (defun web1 ()
   (interactive) 

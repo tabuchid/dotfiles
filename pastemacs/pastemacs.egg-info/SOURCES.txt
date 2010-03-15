@@ -1,0 +1,10 @@
+.hgignore
+.hgsigs
+.hgtags
+pastemacs.py
+setup.py
+pastemacs.egg-info/PKG-INFO
+pastemacs.egg-info/SOURCES.txt
+pastemacs.egg-info/dependency_links.txt
+pastemacs.egg-info/requires.txt
+pastemacs.egg-info/top_level.txt
