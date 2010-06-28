@@ -28,13 +28,25 @@ If there is one running, switch to that buffer."
   (interactive) 
   (remote-term "stage" "ssh" "stage"))
 
+(defun stagedb ()
+  (interactive) 
+  (remote-term "stagedb" "ssh" "stagedb"))
+
+(defun masterdb ()
+  (interactive) 
+  (remote-term "masterdb" "ssh" "masterdb"))
+
+(defun stageassets ()
+  (interactive) 
+  (remote-term "stageassets" "ssh" "stageassets"))
+
 (defun dev ()
   (interactive) 
   (remote-term "dev" "ssh" "dev.fanfeedr.com"))
 
 (defun test ()
   (interactive) 
-  (remote-term "dev" "ssh" "test.fanfeedr.com"))
+  (remote-term "test" "ssh" "test.fanfeedr.com"))
 
 (defun web1 ()
   (interactive) 
@@ -43,9 +55,14 @@ If there is one running, switch to that buffer."
 (defun web2 ()
   (interactive) 
   (remote-term "web2" "ssh" "web2"))
+
 (defun assets ()
   (interactive) 
   (remote-term "assets" "ssh" "assets.fanfeedr.com"))
+
+(defun assets2 ()
+  (interactive) 
+  (remote-term "assets2" "ssh" "assets2.fanfeedr.com"))
 
 (defun doug ()
   (interactive) 
