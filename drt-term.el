@@ -64,6 +64,10 @@ If there is one running, switch to that buffer."
   (interactive) 
   (remote-term "assets2" "ssh" "assets2.fanfeedr.com"))
 
+(defun assets3 ()
+  (interactive) 
+  (remote-term "assets3" "ssh" "assets3.fanfeedr.com"))
+
 (defun doug ()
   (interactive) 
   (remote-term "doug" "ssh" "tabuchid@dougtabuchi.com"))
@@ -71,5 +75,17 @@ If there is one running, switch to that buffer."
 (defun drt-fc12 ()
   (interactive) 
   (remote-term "drt-fc12" "ssh" "drt-fc12.local"))
+
+(defun mq ()
+  (interactive) 
+  (remote-term "mq" "ssh" "mq"))
+
+(defun job1 ()
+  (interactive) 
+  (remote-term "job1" "ssh" "ec2-174-129-188-34.compute-1.amazonaws.com"))
+
+(defun push1 ()
+  (interactive) 
+  (remote-term "push1" "ssh" "ec2-184-73-24-33.compute-1.amazonaws.com"))
 
 (provide 'drt-term)

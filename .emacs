@@ -40,23 +40,18 @@
  '(text-mode-hook (quote (turn-on-auto-fill text-mode-hook-identify)))
  '(tool-bar-mode nil)
  '(transient-mark-mode t))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#2e3436" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :family "apple-monaco")))))
+
 
 (add-to-list 'load-path "~/dotfiles")
 ;(add-to-list 'load-path "~/dotfiles/ecb-2.40")
 (add-to-list 'load-path "~/dotfiles/remember")
 (add-to-list 'load-path "~/dotfiles/mmm-mode-0.4.8")
-;(load "~/dotfiles/Pymacs-0.24-beta1/pymacs.el")
+(add-to-list 'load-path "~/dotfiles/jd-el")
+(require 'google-maps)
 (load "~/dotfiles/mmm-mako/mmm-mako.el")
-(setenv "PYMACS_PYTHON" "/usr/local/bin/python")
 
-;(require 'pymacs) 
 (require 'mmm-auto)
+
 (setq mmm-global-mode 'maybe)
 (mmm-add-mode-ext-class 'html-mode "\\.php\\'" 'html-php)
 (add-to-list 'auto-mode-alist '("\\.mako\\'" . html-mode))
@@ -64,6 +59,13 @@
 (global-set-key "\M-p"  'mmm-parse-buffer)
 (setq paste-kill-url t)
 (setq paste-show-in-browser t)
+
+(setq x-select-enable-clipboard t)
+(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+;(load "~/dotfiles/Pymacs-0.24-beta1/pymacs.el")
+;(setenv "PYMACS_PYTHON" "/usr/local/bin/python")
+;(require 'pymacs) 
+
 ;(autoload 'pymacs-apply "pymacs")
 ;(autoload 'pymacs-call "pymacs")
 ;(autoload 'pymacs-eval "pymacs" nil t)

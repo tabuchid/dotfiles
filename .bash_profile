@@ -1,7 +1,12 @@
+# .bash_profile
+
+# Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-    source ~/.bashrc
+	. ~/.bashrc
 fi
 
-# Setting PATH for MacPython 2.6
-# The orginal version is saved in .bash_profile.pysave
+# User specific environment and startup programs
 
+PATH=$PATH:$HOME/bin
+
+export PATH

@@ -13,4 +13,6 @@
 ;(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
 ;(global-srecode-minor-mode 1)            ; Enable template insertion menu
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq-default py-indent-offset 4)
 (provide 'drt-misc)
