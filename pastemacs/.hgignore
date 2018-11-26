@@ -1,4 +1,0 @@
-syntax: glob
-*.pyc
-pastemacs.egg-info/*
-dist/*
