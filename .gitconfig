@@ -1,0 +1,49 @@
+[github]
+  user = tabuchid
+
+[user]
+  name = Doug Tabuchi
+  email = doug@dougtabuchi.com
+
+[color]
+  ui = auto
+
+[color "diff"]
+  meta = blue bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow bold
+  remote = green bold
+  plain = red bold
+
+[color "status"]
+  added = green bold
+  changed = yellow
+  untracked = blue bold
+
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = ls-files
+
+[core]
+  pager = less -R
+
+[push]
+  default = simple
+
+[branch]
+  autosetuprebase = always
+
+[help]
+  autocorrect = 1

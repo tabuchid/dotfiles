@@ -16,8 +16,3 @@ export HISTCONTROL=erasedups
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 shopt -s histappend
 
-source /usr/local/bin/virtualenvwrapper.sh
-
-
-export ALTERNATE_EDITOR="" EDITOR="emacsclient -c" VISUAL="emacsclient -c"
-
