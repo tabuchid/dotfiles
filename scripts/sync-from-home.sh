@@ -39,6 +39,37 @@ main() {
   copy_if_exists "${HOME}/.zprofile" "${DOTS_DIR}/.zprofile"
   copy_dir_if_exists "${HOME}/.doom.d" "${DOTS_DIR}/doom.d"
 
+  # Common single-file dotfiles (copy if present)
+  for f in \
+    .yarnrc \
+    .npmrc \
+    .editorconfig \
+    .gitignore_global \
+    .ripgreprc \
+    .fdignore \
+    .prettierrc \
+    .prettierrc.json \
+    .eslintrc \
+    .eslintrc.json \
+    .pylintrc \
+    .ruff.toml \
+    .rubocop.yml \
+    .gemrc \
+    .psqlrc \
+    .sqliterc \
+    .terraformrc \
+    .wgetrc \
+    .curlrc \
+    .inputrc \
+    .ackrc \
+    .agignore \
+    .gitmessage \
+  ; do
+    if [[ -f "${HOME}/${f}" ]]; then
+      copy_if_exists "${HOME}/${f}" "${DOTS_DIR}/${f}"
+    fi
+  done
+
   # Shell customizations
   copy_if_exists "${HOME}/.zsh_aliases" "${DOTS_DIR}/.zsh_aliases"
   copy_dir_if_exists "${HOME}/.zshrc.d" "${DOTS_DIR}/zshrc.d"
