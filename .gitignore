@@ -9,3 +9,21 @@ Brewfile.lock.json
 
 # Backups created by link script
 *.bak.*
+
+# Editors cache/state (only keep settings, keybindings, snippets, extensions list)
+dotfiles/editors/**/globalStorage/
+dotfiles/editors/**/workspaceStorage/
+dotfiles/editors/**/History/
+dotfiles/editors/**/User/globalStorage/
+
+# Sensitive / noisy configs to avoid committing
+# (present on machine but not tracked by default)
+**/.aws/
+**/.kube/
+**/.ssh/
+**/.gnupg/
+**/.op/
+**/.raycast/
+**/.github-copilot/
+**/.gh/
+**/.git-credential*

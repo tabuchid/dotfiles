@@ -30,6 +30,14 @@ main() {
     ["${DOTS_DIR}/doom.d"]="${HOME}/.doom.d"
     ["${DOTS_DIR}/editors/vscode"]="${HOME}/Library/Application Support/Code/User"
     ["${DOTS_DIR}/editors/cursor"]="${HOME}/Library/Application Support/Cursor/User"
+    ["${DOTS_DIR}/.zsh_aliases"]="${HOME}/.zsh_aliases"
+    ["${DOTS_DIR}/zshrc.d"]="${HOME}/.zshrc.d"
+    ["${DOTS_DIR}/zshrc.pre-plugins.d"]="${HOME}/.zshrc.pre-plugins.d"
+    ["${DOTS_DIR}/config/mise"]="${HOME}/.config/mise"
+    ["${DOTS_DIR}/config/wezterm"]="${HOME}/.config/wezterm"
+    ["${DOTS_DIR}/config/ghostty"]="${HOME}/.config/ghostty"
+    ["${DOTS_DIR}/config/htop"]="${HOME}/.config/htop"
+    ["${DOTS_DIR}/config/git"]="${HOME}/.config/git"
   )
   for src in "${!MAP[@]}"; do
     dst="${MAP[$src]}"

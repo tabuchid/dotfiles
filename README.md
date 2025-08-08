@@ -11,6 +11,9 @@ A repeatable, documented setup for my macOS development environment.
   - VSCode `User` dir -> `dotfiles/editors/vscode` (also exports extensions.txt)
   - Cursor `User` dir -> `dotfiles/editors/cursor` (also exports extensions.txt)
 - Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`, `.doom.d/`, editor settings
+- Additional configs captured:
+  - Shell: `.zsh_aliases`, `.zshrc.d/`, `.zshrc.pre-plugins.d/`
+  - XDG: `.config/mise/`, `.config/wezterm/`, `.config/ghostty/`, `.config/htop/`, `.config/git/`
 
 ## One-time bootstrap (new machine)
 1) Install Xcode Command Line Tools (GUI pops up):

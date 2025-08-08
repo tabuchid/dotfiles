@@ -1,0 +1,9 @@
+[tools]
+node = "20.16.0"
+usage = "latest"
+python = "3.12.6"
+rust = "1.84.0"
+ruby = "latest"
+
+[settings]
+experimental = true

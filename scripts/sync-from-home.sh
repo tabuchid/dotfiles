@@ -38,6 +38,19 @@ main() {
   copy_if_exists "${HOME}/.tmux.conf.local" "${DOTS_DIR}/.tmux.conf.local"
   copy_if_exists "${HOME}/.zprofile" "${DOTS_DIR}/.zprofile"
   copy_dir_if_exists "${HOME}/.doom.d" "${DOTS_DIR}/doom.d"
+
+  # Shell customizations
+  copy_if_exists "${HOME}/.zsh_aliases" "${DOTS_DIR}/.zsh_aliases"
+  copy_dir_if_exists "${HOME}/.zshrc.d" "${DOTS_DIR}/zshrc.d"
+  copy_dir_if_exists "${HOME}/.zshrc.pre-plugins.d" "${DOTS_DIR}/zshrc.pre-plugins.d"
+
+  # XDG config selections
+  copy_dir_if_exists "${HOME}/.config/mise" "${DOTS_DIR}/config/mise"
+  copy_dir_if_exists "${HOME}/.config/wezterm" "${DOTS_DIR}/config/wezterm"
+  copy_dir_if_exists "${HOME}/.config/ghostty" "${DOTS_DIR}/config/ghostty"
+  copy_dir_if_exists "${HOME}/.config/htop" "${DOTS_DIR}/config/htop"
+  copy_dir_if_exists "${HOME}/.config/git" "${DOTS_DIR}/config/git"
+
   log "Sync complete."
 }
 
