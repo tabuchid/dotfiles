@@ -13,7 +13,7 @@ A repeatable, documented setup for my macOS development environment.
 - Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`, `.doom.d/`, editor settings
 - Additional configs captured:
   - Shell: `.zsh_aliases`, `.zshrc.d/`, `.zshrc.pre-plugins.d/`
-  - XDG: `.config/mise/`, `.config/wezterm/`, `.config/ghostty/`, `.config/htop/`, `.config/git/`
+  - XDG: `.config/mise/`, `.config/wezterm/`, `.config/ghostty/`, `.config/htop/`, `.config/git/`, `.config/raycast/`, `.config/gh/` (config.yml + extensions list)
 
 ## One-time bootstrap (new machine)
 1) Install Xcode Command Line Tools (GUI pops up):
@@ -39,6 +39,6 @@ A repeatable, documented setup for my macOS development environment.
 - Cursor: `cat dotfiles/editors/cursor/extensions.txt | xargs -n1 "/Applications/Cursor.app/Contents/Resources/app/bin/cursor" --install-extension`
 
 ## Notes
-- Secrets (SSH/GPG keys, tokens) are NOT stored here. SSH agent is handled via 1Password when available.
+- Secrets (SSH/GPG keys, tokens) are NOT stored here. GitHub CLI authentication, Raycast cloud data, etc., are excluded. Re-authenticate on new machines as needed.
 - zsh prompt uses Powerlevel10k (`~/.p10k.zsh`).
 - tmux uses Oh My Tmux with local overrides in `~/.tmux.conf.local`.

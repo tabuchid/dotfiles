@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/update.tsx"],
+  "sourcesContent": ["import { Action, ActionPanel, List, open, Icon } from \"@raycast/api\";\n\nexport default function Update() {\n  return (\n    <List>\n      <List.EmptyView\n        icon={Icon.Info}\n        title=\"Update the Spotify Player Extension\"\n        description=\"Thanks for helping test Spotify Player Beta. This version of this extension is no longer supported, please update to the latest version.\"\n        actions={\n          <ActionPanel>\n            <Action\n              title=\"Install Spotify Player\"\n              onAction={() => open(\"raycast://extensions/mattisssa/spotify-player\")}\n            />\n          </ActionPanel>\n        }\n      />\n    </List>\n  );\n}\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,aAAAE,IAAA,eAAAC,EAAAH,GAAA,IAAAI,EAAsD,wBAW1CC,EAAA,6BATG,SAARH,GAA0B,CAC/B,SACE,OAAC,QACC,mBAAC,OAAK,UAAL,CACC,KAAM,OAAK,KACX,MAAM,sCACN,YAAY,2IACZ,WACE,OAAC,eACC,mBAAC,UACC,MAAM,yBACN,SAAU,OAAM,QAAK,+CAA+C,EACtE,EACF,EAEJ,EACF,CAEJ",
+  "names": ["update_exports", "__export", "Update", "__toCommonJS", "import_api", "import_jsx_runtime"]
+}

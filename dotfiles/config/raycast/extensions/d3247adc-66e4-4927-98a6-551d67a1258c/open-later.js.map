@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/open-later.tsx", "../src/utils.ts"],
+  "sourcesContent": ["import { open } from \"@raycast/api\";\nimport { getOpenUrl } from \"./utils\";\n\nexport default async function Later() {\n  await open(getOpenUrl(\"later\"));\n}\n", "import { getPreferenceValues } from \"@raycast/api\";\n\nexport const BASE_URL = \"https://read.readwise.io/\";\n\ninterface Preferences {\n  token: string;\n  openInDesktopApp: boolean;\n}\n\nexport function getOpenUrl(path: string): string {\n  const preferences = getPreferenceValues<Preferences>();\n\n  if (preferences.openInDesktopApp) {\n    return `wiseread://${path}`;\n  }\n\n  return BASE_URL + path;\n}\n"],
+  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,aAAAE,IAAA,eAAAC,EAAAH,GAAA,IAAAI,EAAqB,wBCArB,IAAAC,EAAoC,wBAEvBC,EAAW,4BAOjB,SAASC,EAAWC,EAAsB,CAG/C,SAFoB,uBAAiC,EAErC,iBACP,cAAcA,CAAI,GAGpBF,EAAWE,CACpB,CDdA,eAAOC,GAA+B,CACpC,QAAM,QAAKC,EAAW,OAAO,CAAC,CAChC",
+  "names": ["open_later_exports", "__export", "Later", "__toCommonJS", "import_api", "import_api", "BASE_URL", "getOpenUrl", "path", "Later", "getOpenUrl"]
+}

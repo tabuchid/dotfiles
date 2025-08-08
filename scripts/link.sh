@@ -38,6 +38,8 @@ main() {
     ["${DOTS_DIR}/config/ghostty"]="${HOME}/.config/ghostty"
     ["${DOTS_DIR}/config/htop"]="${HOME}/.config/htop"
     ["${DOTS_DIR}/config/git"]="${HOME}/.config/git"
+    ["${DOTS_DIR}/config/raycast"]="${HOME}/.config/raycast"
+    ["${DOTS_DIR}/config/gh"]="${HOME}/.config/gh"
   )
   for src in "${!MAP[@]}"; do
     dst="${MAP[$src]}"

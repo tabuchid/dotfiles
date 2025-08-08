@@ -50,6 +50,16 @@ main() {
   copy_dir_if_exists "${HOME}/.config/ghostty" "${DOTS_DIR}/config/ghostty"
   copy_dir_if_exists "${HOME}/.config/htop" "${DOTS_DIR}/config/htop"
   copy_dir_if_exists "${HOME}/.config/git" "${DOTS_DIR}/config/git"
+  copy_dir_if_exists "${HOME}/.config/raycast" "${DOTS_DIR}/config/raycast"
+
+  # GitHub CLI (safe subset)
+  if [[ -f "${HOME}/.config/gh/config.yml" ]]; then
+    mkdir -p "${DOTS_DIR}/config/gh"
+    install -m 0644 "${HOME}/.config/gh/config.yml" "${DOTS_DIR}/config/gh/config.yml"
+  fi
+  if command -v gh >/dev/null 2>&1; then
+    gh extension list | awk '{print $1}' > "${DOTS_DIR}/config/gh/extensions.txt" || true
+  fi
 
   log "Sync complete."
 }

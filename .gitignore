@@ -26,4 +26,13 @@ dotfiles/editors/**/User/globalStorage/
 **/.raycast/
 **/.github-copilot/
 **/.gh/
+
+# GitHub CLI: keep config.yml & extensions.txt only
+.dotfiles/**/config/gh/*
+!dotfiles/**/config/gh/config.yml
+!dotfiles/**/config/gh/extensions.txt
+
+# Raycast: generally safe settings; still ignore cache and sync folders
+**/.config/raycast/**/cache/
+**/.config/raycast/**/sync/
 **/.git-credential*
