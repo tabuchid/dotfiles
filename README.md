@@ -6,7 +6,8 @@ A repeatable, documented setup for my macOS development environment.
 - Restores Homebrew packages via `Brewfile`
 - Clones zsh framework `zsh-quickstart-kit` and links `~/.zshrc`
 - Clones tmux framework `gpakosz/.tmux` and links `~/.tmux.conf`
-- Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`
+- Installs/updates Doom Emacs (`~/.emacs.d`) and uses your config from `~/.doom.d`
+- Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`, `.doom.d/`
 
 ## One-time bootstrap (new machine)
 1) Install Xcode Command Line Tools (GUI pops up):
@@ -22,6 +23,8 @@ A repeatable, documented setup for my macOS development environment.
   - `./scripts/setup.sh` (idempotent)
 - Re-dump current Homebrew state:
   - `brew bundle dump --file ./Brewfile --describe --no-restart -f`
+- Re-sync editor configs (e.g., after editing Doom / VSCode / Cursor settings locally):
+  - `./scripts/sync-from-home.sh`
 
 ## Notes
 - Secrets (SSH/GPG keys, tokens) are NOT stored here. SSH agent is handled via 1Password when available.

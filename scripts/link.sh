@@ -27,10 +27,11 @@ main() {
     ["${DOTS_DIR}/.p10k.zsh"]="${HOME}/.p10k.zsh"
     ["${DOTS_DIR}/.tmux.conf.local"]="${HOME}/.tmux.conf.local"
     ["${DOTS_DIR}/.zprofile"]="${HOME}/.zprofile"
+    ["${DOTS_DIR}/doom.d"]="${HOME}/.doom.d"
   )
   for src in "${!MAP[@]}"; do
     dst="${MAP[$src]}"
-    if [[ -f "${src}" ]]; then
+    if [[ -e "${src}" ]]; then
       backup_and_link "${src}" "${dst}"
     else
       log "Skip (missing): ${src}"

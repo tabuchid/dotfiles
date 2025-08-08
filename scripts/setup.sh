@@ -44,6 +44,10 @@ install_tmux_framework() {
   "${REPO_DIR}/scripts/install-oh-my-tmux.sh"
 }
 
+install_doom() {
+  "${REPO_DIR}/scripts/install-doom.sh"
+}
+
 link_dotfiles() {
   "${REPO_DIR}/scripts/link.sh"
 }
@@ -55,6 +59,7 @@ main() {
   install_zsh_framework
   install_tmux_framework
   link_dotfiles
+  install_doom
   log "Done. Open a new terminal session to pick up changes."
 }
 
