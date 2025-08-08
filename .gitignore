@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Homebrew
+Brewfile.lock.json
+
+# Logs
+*.log
+
+# Backups created by link script
+*.bak.*
