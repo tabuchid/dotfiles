@@ -7,7 +7,10 @@ A repeatable, documented setup for my macOS development environment.
 - Clones zsh framework `zsh-quickstart-kit` and links `~/.zshrc`
 - Clones tmux framework `gpakosz/.tmux` and links `~/.tmux.conf`
 - Installs/updates Doom Emacs (`~/.emacs.d`) and uses your config from `~/.doom.d`
-- Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`, `.doom.d/`
+- Captures editor configs:
+  - VSCode `User` dir -> `dotfiles/editors/vscode` (also exports extensions.txt)
+  - Cursor `User` dir -> `dotfiles/editors/cursor` (also exports extensions.txt)
+- Symlinks personal dotfiles: `.gitconfig`, `.p10k.zsh`, `.tmux.conf.local`, `.zprofile`, `.doom.d/`, editor settings
 
 ## One-time bootstrap (new machine)
 1) Install Xcode Command Line Tools (GUI pops up):
@@ -23,8 +26,14 @@ A repeatable, documented setup for my macOS development environment.
   - `./scripts/setup.sh` (idempotent)
 - Re-dump current Homebrew state:
   - `brew bundle dump --file ./Brewfile --describe --no-restart -f`
-- Re-sync editor configs (e.g., after editing Doom / VSCode / Cursor settings locally):
+- Re-sync editor configs (VSCode/Cursor):
+  - `./scripts/sync-editors.sh`
+- Re-sync dotfiles (Doom, gitconfig, etc.):
   - `./scripts/sync-from-home.sh`
+
+## Restore VSCode/Cursor extensions on a new machine
+- VSCode: `cat dotfiles/editors/vscode/extensions.txt | xargs -n1 "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --install-extension`
+- Cursor: `cat dotfiles/editors/cursor/extensions.txt | xargs -n1 "/Applications/Cursor.app/Contents/Resources/app/bin/cursor" --install-extension`
 
 ## Notes
 - Secrets (SSH/GPG keys, tokens) are NOT stored here. SSH agent is handled via 1Password when available.

@@ -1,0 +1,25 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "cmd+i",
+        "command": "composerMode.agent"
+    },
+    {
+        "key": "ctrl+g",
+        "command": "vim.remap",
+        "args": {
+          "after": ["<Esc>"]
+        },
+        "when": "editorTextFocus && vim.mode != 'Normal'"
+      },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "\u000b" },
+        "when": "terminalFocus"
+    },
+    {
+      "key": "cmd+e",
+      "command": "composerMode.background"
+    }
+]

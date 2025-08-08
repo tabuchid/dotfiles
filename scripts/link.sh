@@ -28,6 +28,8 @@ main() {
     ["${DOTS_DIR}/.tmux.conf.local"]="${HOME}/.tmux.conf.local"
     ["${DOTS_DIR}/.zprofile"]="${HOME}/.zprofile"
     ["${DOTS_DIR}/doom.d"]="${HOME}/.doom.d"
+    ["${DOTS_DIR}/editors/vscode"]="${HOME}/Library/Application Support/Code/User"
+    ["${DOTS_DIR}/editors/cursor"]="${HOME}/Library/Application Support/Cursor/User"
   )
   for src in "${!MAP[@]}"; do
     dst="${MAP[$src]}"

@@ -48,6 +48,10 @@ install_doom() {
   "${REPO_DIR}/scripts/install-doom.sh"
 }
 
+sync_editors() {
+  "${REPO_DIR}/scripts/sync-editors.sh" || true
+}
+
 link_dotfiles() {
   "${REPO_DIR}/scripts/link.sh"
 }
@@ -58,6 +62,7 @@ main() {
   restore_brew
   install_zsh_framework
   install_tmux_framework
+  sync_editors
   link_dotfiles
   install_doom
   log "Done. Open a new terminal session to pick up changes."

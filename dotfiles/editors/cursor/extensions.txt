@@ -1,0 +1,17 @@
+anysphere.cursorpyright
+bierner.markdown-mermaid
+catppuccin.catppuccin-vsc
+charliermarsh.ruff
+datadog.datadog-vscode
+esbenp.prettier-vscode
+github.vscode-github-actions
+mcaragheorghe.vim-enhanced
+mechatroner.rainbow-csv
+ms-azuretools.vscode-containers
+ms-azuretools.vscode-docker
+ms-python.debugpy
+ms-python.python
+ms-vscode.makefile-tools
+shopify.ruby-lsp
+vscodevim.vim
+waderyan.gitblame
