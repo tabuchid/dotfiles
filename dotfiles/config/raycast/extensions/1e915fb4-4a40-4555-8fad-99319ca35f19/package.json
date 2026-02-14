@@ -2,22 +2,27 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "things",
   "title": "Things",
-  "version": "1.0.0",
   "description": "Search and manage your Things to-dos from Raycast",
   "icon": "things-icon.png",
   "author": "loris",
   "contributors": [
     "andreaselia",
     "stelo",
-    "thomaslombart",
     "srikirank",
     "vimtor",
     "samuelkraft",
     "bendrucker",
     "vmrjnvc",
-    "dinocosta"
+    "dinocosta",
+    "janosorcsik"
+  ],
+  "pastContributors": [
+    "thomaslombart"
   ],
   "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
   "commands": [
     {
       "name": "show-today-list",
@@ -115,7 +120,7 @@
           "name": "dontUseAI",
           "type": "checkbox",
           "label": "Don't use AI",
-          "description": "When enabled, the todo is simply added to your inbox with the input as the title.",
+          "description": "When enabled, the to-do is simply added to your inbox with the input as the title.",
           "default": false,
           "required": false
         }
@@ -145,20 +150,22 @@
   "tools": [
     {
       "name": "get-list-todos",
-      "title": "Get List Todos",
-      "description": "Get all the todos from a list in Things",
+      "title": "Get List To-Dos",
+      "description": "Get all the to-dos from a list in Things",
       "input": {
         "type": "object",
         "properties": {
           "commandListName": {
             "type": "string",
-            "description": "The name of the list to get todos from",
+            "description": "The name of the list to get to-dos from",
             "enum": [
               "inbox",
               "today",
               "anytime",
               "upcoming",
-              "someday"
+              "someday",
+              "logbook",
+              "trash"
             ]
           }
         },
@@ -194,14 +201,14 @@
     },
     {
       "name": "delete-todo",
-      "title": "Delete Todo",
-      "description": "Delete a todo in Things",
+      "title": "Delete To-Do",
+      "description": "Delete a to-do in Things",
       "input": {
         "type": "object",
         "properties": {
           "todoId": {
             "type": "string",
-            "description": "The todo id to delete"
+            "description": "The to-do id to delete"
           }
         },
         "required": [
@@ -212,14 +219,14 @@
     },
     {
       "name": "update-todo",
-      "title": "Update Todo",
-      "description": "Update a todo in Things",
+      "title": "Update To-Do",
+      "description": "Update a to-do in Things",
       "input": {
         "type": "object",
         "properties": {
           "todoId": {
             "type": "string",
-            "description": "The todo id to update"
+            "description": "The to-do id to update"
           },
           "todoParams": {
             "type": "object",
@@ -257,10 +264,16 @@
               "append-checklist-items": {
                 "type": "string"
               },
-              "list": {
+              "use-clipboard": {
                 "type": "string"
               },
               "list-id": {
+                "type": "string"
+              },
+              "list": {
+                "type": "string"
+              },
+              "heading-id": {
                 "type": "string"
               },
               "heading": {
@@ -270,6 +283,9 @@
                 "type": "boolean"
               },
               "canceled": {
+                "type": "boolean"
+              },
+              "show-quick-entry": {
                 "type": "boolean"
               },
               "reveal": {
@@ -298,14 +314,14 @@
     },
     {
       "name": "set-todo-property",
-      "title": "Set Todo Property",
-      "description": "Set a property of a todo in Things",
+      "title": "Set To-Do Property",
+      "description": "Set a property of a to-do in Things",
       "input": {
         "type": "object",
         "properties": {
           "todoId": {
             "type": "string",
-            "description": "The todo id to update"
+            "description": "The to-do id to update"
           },
           "key": {
             "type": "string",
@@ -326,69 +342,67 @@
     },
     {
       "name": "add-todo",
-      "title": "Add Todo",
-      "description": "Add a todo in Things",
+      "title": "Add To-Do",
+      "description": "Add a to-do in Things",
       "input": {
         "type": "object",
         "properties": {
-          "todoParams": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string"
-              },
-              "notes": {
-                "type": "string"
-              },
-              "when": {
-                "type": "string"
-              },
-              "deadline": {
-                "type": "string"
-              },
-              "tags": {
-                "type": "string"
-              },
-              "add-tags": {
-                "type": "string"
-              },
-              "checklist-items": {
-                "type": "string"
-              },
-              "list-id": {
-                "type": "string"
-              },
-              "heading": {
-                "type": "string"
-              },
-              "heading-id": {
-                "type": "string"
-              },
-              "completed": {
-                "type": "boolean"
-              },
-              "canceled": {
-                "type": "boolean"
-              },
-              "duplicate": {
-                "type": "boolean"
-              },
-              "creation-date": {
-                "type": "string"
-              },
-              "completion-date": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "when"
-            ],
-            "description": "The todo parameters to set"
+          "title": {
+            "type": "string"
+          },
+          "titles": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "when": {
+            "type": "string"
+          },
+          "deadline": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "string"
+          },
+          "checklist-items": {
+            "type": "string"
+          },
+          "use-clipboard": {
+            "type": "string"
+          },
+          "list-id": {
+            "type": "string"
+          },
+          "list": {
+            "type": "string"
+          },
+          "heading-id": {
+            "type": "string"
+          },
+          "heading": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "canceled": {
+            "type": "boolean"
+          },
+          "show-quick-entry": {
+            "type": "boolean"
+          },
+          "reveal": {
+            "type": "boolean"
+          },
+          "creation-date": {
+            "type": "string"
+          },
+          "completion-date": {
+            "type": "string"
           }
         },
-        "required": [
-          "todoParams"
-        ]
+        "required": []
       },
       "confirmation": false
     },
@@ -408,35 +422,139 @@
           "when": {
             "type": "string"
           },
-          "area-id": {
-            "type": "string"
-          },
           "deadline": {
             "type": "string"
           },
           "tags": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+            "type": "string"
+          },
+          "area-id": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
           },
           "to-dos": {
             "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "canceled": {
+            "type": "boolean"
+          },
+          "reveal": {
+            "type": "boolean"
+          },
+          "creation-date": {
+            "type": "string"
+          },
+          "completion-date": {
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "confirmation": false
+    },
+    {
+      "name": "update-project",
+      "title": "Update Project",
+      "description": "Update a project in Things",
+      "input": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "The project id to update"
+          },
+          "projectParams": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "prepend-notes": {
+                "type": "string"
+              },
+              "append-notes": {
+                "type": "string"
+              },
+              "when": {
+                "type": "string"
+              },
+              "deadline": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "string"
+              },
+              "add-tags": {
+                "type": "string"
+              },
+              "area-id": {
+                "type": "string"
+              },
+              "area": {
+                "type": "string"
+              },
+              "completed": {
+                "type": "boolean"
+              },
+              "canceled": {
+                "type": "boolean"
+              },
+              "reveal": {
+                "type": "boolean"
+              },
+              "duplicate": {
+                "type": "boolean"
+              },
+              "creation-date": {
+                "type": "string"
+              },
+              "completion-date": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "description": "The parameters to update"
           }
         },
         "required": [
-          "title",
-          "when"
+          "projectId",
+          "projectParams"
         ]
       },
       "confirmation": false
+    },
+    {
+      "name": "delete-project",
+      "title": "Delete Project",
+      "description": "Delete a project in Things",
+      "input": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "description": "The project id to delete"
+          }
+        },
+        "required": [
+          "projectId"
+        ]
+      },
+      "confirmation": true
     }
   ],
   "ai": {
-    "instructions": "Moving a todo means changing its list. For example, moving \"buy milk\" from inbox to today means changing its list to today. Only update the when property of the todo when referring to a date.",
+    "instructions": "Moving a to-do means changing its list. For example, moving \"buy milk\" from inbox to today means changing its list to today. Only update the when property of the to-do when referring to a date.",
     "evals": [
       {
-        "input": "@things what are my todos for today?",
+        "input": "@things what are my to-dos for today?",
         "mocks": {
           "get-list-todos": [
             {
@@ -552,7 +670,7 @@
         ]
       },
       {
-        "input": "@things move all todos from my inbox to today",
+        "input": "@things move all to-dos from my inbox to today",
         "mocks": {
           "update-todo": "Successfully called \"update-todo\"",
           "get-list-todos": [
@@ -651,27 +769,25 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.79.1",
-    "@raycast/utils": "^1.16.2",
-    "dayjs": "^1.11.12",
-    "qs": "^6.12.3"
+    "@raycast/api": "^1.103.5",
+    "@raycast/utils": "^2.2.1",
+    "dayjs": "^1.11.18",
+    "query-string": "^9.3.1"
   },
   "devDependencies": {
-    "@raycast/eslint-config": "^1.0.8",
-    "@types/node": "^22.0.0",
-    "@types/qs": "^6.9.15",
-    "@types/react": "^18.3.3",
-    "eslint": "^8.57.0",
-    "typescript": "^5.5.3"
+    "@raycast/eslint-config": "^2.1.1",
+    "@types/node": "^24.9.2",
+    "@types/qs": "^6.14.0",
+    "@types/react": "^19.2.2",
+    "eslint": "^9.38.0",
+    "typescript": "^5.9.3"
   },
+  "version": "1.0.0",
   "scripts": {
     "build": "ray build -e dist",
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
     "publish": "npx @raycast/api@latest publish"
-  },
-  "platforms": [
-    "macOS"
-  ]
+  }
 }
