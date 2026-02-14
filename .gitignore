@@ -36,3 +36,6 @@ dotfiles/editors/**/User/globalStorage/
 **/.config/raycast/**/cache/
 **/.config/raycast/**/sync/
 **/.git-credential*
+
+# Machine-specific shell scripts
+dotfiles/zshrc.d/002-buoy-automation.zshrc
