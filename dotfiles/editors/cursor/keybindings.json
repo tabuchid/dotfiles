@@ -17,9 +17,5 @@
         "command": "workbench.action.terminal.sendSequence",
         "args": { "text": "\u000b" },
         "when": "terminalFocus"
-    },
-    {
-      "key": "cmd+e",
-      "command": "composerMode.background"
     }
 ]

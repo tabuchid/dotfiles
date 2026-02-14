@@ -25,3 +25,49 @@ eval "$(uvx --generate-shell-completion zsh)"
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   export GIT_PAGER=cat
 fi
+
+
+export JIRA_EMAIL=doug.t@buoysoftware.com
+export JIRA_API_TOKEN=REDACTED_JIRA_TOKEN
+export JIRA_DOMAIN='buoysoftware.atlassian.net'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# eval "$(~/.local/bin/cursor-agent shell-integration zsh)"
+
+export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
+export GITHUB_PACKAGES_TOKEN=REDACTED_GITHUB_TOKEN
+
+export SENTRY_AUTH_TOKEN=REDACTED_SENTRY_TOKEN
+export SENTRY_ORG=buoy-software
+
+# opencode
+export PATH=/Users/doug/.opencode/bin:$PATH
+
+# bun completions
+[ -s "/Users/doug/.bun/_bun" ] && source "/Users/doug/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# mise - use shims so project/tool versions take precedence over Homebrew/system bins
+if command -v mise >/dev/null 2>&1; then
+  mise_bin="$(whence -p mise 2>/dev/null)"
+  eval "$(mise activate zsh --shims)"
+
+  # Keep mise completion available without depending on the OMZ mise plugin.
+  mise_comp_dir="${ZSH_CACHE_DIR:-$HOME/.zsh/cache}/completions"
+  mkdir -p "$mise_comp_dir"
+
+  if [[ ! -s "$mise_comp_dir/_mise" || ( -n "$mise_bin" && "$mise_bin" -nt "$mise_comp_dir/_mise" ) ]]; then
+    mise completion zsh >| "$mise_comp_dir/_mise"
+  fi
+
+  fpath=("$mise_comp_dir" $fpath)
+  autoload -Uz _mise
+  compdef _mise mise
+
+  unset mise_bin
+  unset mise_comp_dir
+fi
