@@ -27,20 +27,13 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
 fi
 
 
-export JIRA_EMAIL=doug.t@buoysoftware.com
-export JIRA_API_TOKEN=REDACTED_JIRA_TOKEN
-export JIRA_DOMAIN='buoysoftware.atlassian.net'
+[ -f "${0:a:h}/secrets.zshrc" ] && source "${0:a:h}/secrets.zshrc"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # eval "$(~/.local/bin/cursor-agent shell-integration zsh)"
 
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
-export GITHUB_PACKAGES_TOKEN=REDACTED_GITHUB_TOKEN
-
-export SENTRY_AUTH_TOKEN=REDACTED_SENTRY_TOKEN
-export SENTRY_ORG=buoy-software
-
 # opencode
 export PATH=/Users/doug/.opencode/bin:$PATH
 
