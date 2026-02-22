@@ -130,7 +130,7 @@ cask "ngrok"
 cask "session-manager-plugin"
 # Music streaming service
 cask "spotify"
-vscode "anysphere.cursorpyright"
+vscode "anysphere.pyright"
 vscode "bierner.markdown-mermaid"
 vscode "catppuccin.catppuccin-vsc"
 vscode "charliermarsh.ruff"
