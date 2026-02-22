@@ -111,7 +111,6 @@ Formulae are grouped for readability. Linked names point to Homebrew Formula pag
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
 | [`erlang`](https://formulae.brew.sh/formula/erlang) | Brewfile (brew) | Programming language for highly scalable real-time systems | None (install only) | N/A |  |
-| [`python@3.12`](https://formulae.brew.sh/formula/python@3.12) | Brewfile (brew) | Interpreted, interactive, object-oriented programming language | None (install only) | N/A |  |
 | [`yarn`](https://formulae.brew.sh/formula/yarn) | Brewfile (brew) | JavaScript package manager | None (install only) | N/A |  |
 
 ### Terminal/editor support

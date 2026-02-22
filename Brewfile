@@ -57,8 +57,6 @@ brew "pkgconf"
 brew "heroku"
 # Improved top (interactive process viewer)
 brew "htop"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.12", link: false
 # Database of common MIME types
 brew "shared-mime-info"
 # Tools and libraries to manipulate images in many formats
