@@ -68,6 +68,7 @@ Formulae are grouped for readability. Linked names point to Homebrew Formula pag
 | [`stow`](https://formulae.brew.sh/formula/stow) | Brewfile (brew) | Organize software neatly under a single directory tree (e.g. /usr/local) | None (install only) | N/A |  |
 | [`tree`](https://formulae.brew.sh/formula/tree) | Brewfile (brew) | Display directories as trees (with optional color/HTML output) | None (install only) | N/A |  |
 | [`urlview`](https://formulae.brew.sh/formula/urlview) | Brewfile (brew) | URL extractor/launcher | None (install only) | N/A |  |
+| [`mise`](https://formulae.brew.sh/formula/mise) | Brewfile (brew) | Polyglot runtime/version manager (used for non-Python runtimes) | Verify zsh activation and `mise doctor`; Python is intentionally managed with `uv`. | `~/.config/mise` | Config tracked in `dotfiles/config/mise`. |
 | [`uv`](https://formulae.brew.sh/formula/uv) | Brewfile (brew) | Extremely fast Python package installer and resolver, written in Rust | Shell completions are sourced in `zshrc.d/001.zshrc`; verify startup. | zsh config | Both `uv` and `uvx` completion evals are configured. |
 | [`wget`](https://formulae.brew.sh/formula/wget) | Brewfile (brew) | Internet file retriever | None (install only) | N/A |  |
 | [`zoxide`](https://formulae.brew.sh/formula/zoxide) | Brewfile (brew) | Shell extension to navigate your filesystem faster | Shell init should be provided by zsh config; verify `zoxide query` works. | zsh init | Check startup after bootstrap. |
@@ -95,9 +96,6 @@ Formulae are grouped for readability. Linked names point to Homebrew Formula pag
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
 | [`libpq`](https://formulae.brew.sh/formula/libpq) | Brewfile (brew) | Postgres C API library | None (install only) | N/A |  |
-| [`postgresql@15`](https://formulae.brew.sh/formula/postgresql@15) | Brewfile (brew) | Object-relational database system | Initialize/start service and verify connectivity. See Services section. | Data dir under Homebrew prefix | Service management documented below. |
-| [`rabbitmq`](https://formulae.brew.sh/formula/rabbitmq) | Brewfile (brew) | Messaging and streaming broker | Start service and verify with `rabbitmq-diagnostics status`. | Data/config under Homebrew prefix | Service management documented below. |
-| [`redis`](https://formulae.brew.sh/formula/redis) | Brewfile (brew) | Persistent key-value database, with built-in net interface | Start service if needed and verify with `redis-cli ping`. | Data/config under Homebrew prefix | Service management documented below. |
 
 ### Build/toolchains
 
@@ -208,7 +206,6 @@ These are restored via `brew bundle` `vscode` entries. VS Code/Cursor apps thems
 
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
-| mise | Manual install (not in Brewfile) | Version manager; repo tracks config only | Install `mise` and verify zsh activation | `~/.config/mise` | Tracked config exists in `dotfiles/config/mise`. |
 | Raycast | Manual install (not in Brewfile) | Launcher/productivity app | Install/sign in manually if used | App-managed | Repo no longer syncs Raycast config because it contains secrets/generated state. |
 | Visual Studio Code | Manual install (not in Brewfile) | Editor used by sync scripts | Install app to `/Applications/Visual Studio Code.app` | `~/Library/Application Support/Code/User` | `sync-editors.sh` reads and exports this path. |
 | Cursor | Manual install (not in Brewfile) | Editor used by sync scripts | Install app to `/Applications/Cursor.app` | `~/Library/Application Support/Cursor/User` | `sync-editors.sh` reads and exports this path. |
@@ -221,16 +218,12 @@ These are restored via `brew bundle` `vscode` entries. VS Code/Cursor apps thems
 - Install/confirm VS Code and Cursor apps if you use the editor sync/restore workflow.
 - Open WezTerm and confirm it reads `~/.config/wezterm/wezterm.lua`.
 - Run `~/.config/emacs/bin/doom doctor` after Doom bootstrap.
-- Open a new terminal and confirm zsh prompt/plugins/completions (zgenom, fzf, zoxide, uv) work.
-- Start only the local services you need (Postgres/Redis/RabbitMQ).
+- Open a new terminal and confirm zsh prompt/plugins/completions (zgenom, fzf, zoxide, uv, mise) work.
+- Use `uv` for Python versions/tooling (`uv python install`, `uv python pin`) and `mise` for other runtimes.
 
 ## Services and How to Start/Verify
 
-| Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
-|---|---|---|---|---|---|
-| `postgresql@15` | Brewfile (brew) | Local PostgreSQL server/client tools | `brew services start postgresql@15`; verify with `pg_isready` / `psql` | Homebrew-managed | Check `brew info postgresql@15` caveats on first install. |
-| `redis` | Brewfile (brew) | Local Redis server | `brew services start redis`; verify with `redis-cli ping` | Homebrew-managed | Stop when not needed with `brew services stop redis`. |
-| `rabbitmq` | Brewfile (brew) | Local RabbitMQ broker | `brew services start rabbitmq`; verify with `rabbitmq-diagnostics status` | Homebrew-managed | Optional plugin/admin setup is manual. |
+No local database/broker services are currently installed by `Brewfile`.
 
 ## Security Notes
 
@@ -259,6 +252,7 @@ These are restored via `brew bundle` `vscode` entries. VS Code/Cursor apps thems
 - [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus)
 - [zsh-quickstart-kit](https://github.com/unixorn/zsh-quickstart-kit)
 - [zgenom](https://github.com/jandamm/zgenom)
+- [mise](https://mise.jdx.dev/)
 - [Oh My Tmux](https://github.com/gpakosz/.tmux)
 - [WezTerm (install)](https://wezterm.org/install/macos.html)
 - [WezTerm (config)](https://wezterm.org/config/files.html)
@@ -270,4 +264,3 @@ These are restored via `brew bundle` `vscode` entries. VS Code/Cursor apps thems
 - [ngrok getting started](https://ngrok.com/docs/getting-started/)
 - [fzf](https://github.com/junegunn/fzf)
 - [zoxide](https://zoxide.dev/)
-- [RabbitMQ (Homebrew)](https://www.rabbitmq.com/docs/install-homebrew)

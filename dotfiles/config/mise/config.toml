@@ -1,4 +1,5 @@
 [tools]
+# Python is intentionally managed with uv; use mise for other runtimes.
 node = "20.16.0"
 usage = "latest"
 rust = "1.84.0"

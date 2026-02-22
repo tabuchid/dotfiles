@@ -89,12 +89,6 @@ brew "tmux"
 brew "overmind"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
-# Object-relational database system
-brew "postgresql@15"
-# Messaging and streaming broker
-brew "rabbitmq"
-# Persistent key-value database, with built-in net interface
-brew "redis"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Utility that provides fast incremental file transfer
@@ -105,6 +99,8 @@ brew "stow"
 brew "tree"
 # URL extractor/launcher
 brew "urlview"
+# Polyglot runtime/version manager (non-Python runtimes in this setup)
+brew "mise"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Image processing library

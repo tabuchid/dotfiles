@@ -68,6 +68,7 @@ per-host on the client). Do not enable `ForwardAgent yes` globally.
 
 ## Notes
 - Secrets (SSH/GPG keys, tokens) are NOT stored here. GitHub CLI authentication and Raycast state are intentionally not synced. Re-authenticate on new machines as needed.
+- Python tooling/version management is handled with `uv`; other language runtimes are managed with `mise`.
 - zsh prompt uses Powerlevel10k (`~/.p10k.zsh`).
 - tmux uses Oh My Tmux with local overrides in `~/.tmux.conf.local`.
 - GitHub CLI auth is manual after setup: run `gh auth login`.
