@@ -3,10 +3,24 @@ set -euo pipefail
 
 log() { printf "[zsh] %s\n" "$*"; }
 
+ZGENOM_DIR="$HOME/.zgenom"
+ZGENOM_REPO="https://github.com/jandamm/zgenom.git"
 ZQS_DIR="$HOME/zsh-quickstart-kit"
 ZQS_REPO="https://github.com/unixorn/zsh-quickstart-kit.git"
 TARGET_ZSHRC_LINK="$HOME/.zshrc"
 ZQS_ZSHRC_REL="zsh-quickstart-kit/zsh/.zshrc"
+
+if [[ ! -d "${ZGENOM_DIR}/.git" ]]; then
+  if [[ -d "${ZGENOM_DIR}" ]]; then
+    log "Directory ${ZGENOM_DIR} exists but is not a git repo; backing up"
+    mv -v "${ZGENOM_DIR}" "${ZGENOM_DIR}.bak.$(date +%s)"
+  fi
+  log "Cloning ${ZGENOM_REPO} into ${ZGENOM_DIR}"
+  git clone "${ZGENOM_REPO}" "${ZGENOM_DIR}"
+else
+  log "zgenom already present; pulling updates"
+  git -C "${ZGENOM_DIR}" pull --ff-only || true
+fi
 
 if [[ ! -d "${ZQS_DIR}/.git" ]]; then
   if [[ -d "${ZQS_DIR}" ]]; then
@@ -14,7 +28,7 @@ if [[ ! -d "${ZQS_DIR}/.git" ]]; then
     mv -v "${ZQS_DIR}" "${ZQS_DIR}.bak.$(date +%s)"
   fi
   log "Cloning ${ZQS_REPO} into ${ZQS_DIR}"
-  git clone --depth 1 "${ZQS_REPO}" "${ZQS_DIR}"
+  git clone "${ZQS_REPO}" "${ZQS_DIR}"
 else
   log "zsh-quickstart-kit already present; pulling updates"
   git -C "${ZQS_DIR}" pull --ff-only || true

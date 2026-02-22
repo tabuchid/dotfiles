@@ -56,10 +56,53 @@ link_dotfiles() {
   "${REPO_DIR}/scripts/link.sh"
 }
 
+link_emacs_plus_build_config() {
+  local src="${REPO_DIR}/dotfiles/config/emacs-plus"
+  local dst="${HOME}/.config/emacs-plus"
+
+  if [[ ! -e "${src}" ]]; then
+    log "No emacs-plus build config found at ${src}; skipping pre-brew link"
+    return 0
+  fi
+
+  if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}" ]]; then
+    log "emacs-plus build config already linked"
+    return 0
+  fi
+
+  if [[ -e "${dst}" ]]; then
+    local bak="${dst}.bak.$(date +%s)"
+    log "Backing up ${dst} -> ${bak}"
+    mv -v "${dst}" "${bak}"
+  fi
+  mkdir -p "$(dirname "${dst}")"
+  ln -sv "${src}" "${dst}"
+}
+
+setup_emacs_app() {
+  local prefix
+  prefix="$(brew --prefix emacs-plus@30 2>/dev/null)" || return 0
+
+  if ! command -v osascript >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if [[ -d "$prefix/Emacs.app" && ! -e "/Applications/Emacs.app" ]]; then
+    log "Creating Emacs.app alias in /Applications"
+    osascript -e "tell application \"Finder\" to make alias file to posix file \"$prefix/Emacs.app\" at posix file \"/Applications\" with properties {name:\"Emacs.app\"}" || log "Skipping Emacs.app alias (Finder automation unavailable)"
+  fi
+  if [[ -d "$prefix/Emacs Client.app" && ! -e "/Applications/Emacs Client.app" ]]; then
+    log "Creating Emacs Client.app alias in /Applications"
+    osascript -e "tell application \"Finder\" to make alias file to posix file \"$prefix/Emacs Client.app\" at posix file \"/Applications\" with properties {name:\"Emacs Client.app\"}" || log "Skipping Emacs Client.app alias (Finder automation unavailable)"
+  fi
+}
+
 main() {
   ensure_clt
   ensure_brew
+  link_emacs_plus_build_config
   restore_brew
+  setup_emacs_app
   install_zsh_framework
   install_tmux_framework
   sync_editors

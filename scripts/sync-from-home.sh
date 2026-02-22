@@ -37,7 +37,11 @@ main() {
   copy_if_exists "${HOME}/.p10k.zsh" "${DOTS_DIR}/.p10k.zsh"
   copy_if_exists "${HOME}/.tmux.conf.local" "${DOTS_DIR}/.tmux.conf.local"
   copy_if_exists "${HOME}/.zprofile" "${DOTS_DIR}/.zprofile"
-  copy_dir_if_exists "${HOME}/.doom.d" "${DOTS_DIR}/doom.d"
+  if [[ -d "${HOME}/.config/doom" ]]; then
+    copy_dir_if_exists "${HOME}/.config/doom" "${DOTS_DIR}/doom.d"
+  else
+    copy_dir_if_exists "${HOME}/.doom.d" "${DOTS_DIR}/doom.d"
+  fi
 
   # Common single-file dotfiles (copy if present)
   for f in \
@@ -78,10 +82,8 @@ main() {
   # XDG config selections
   copy_dir_if_exists "${HOME}/.config/mise" "${DOTS_DIR}/config/mise"
   copy_dir_if_exists "${HOME}/.config/wezterm" "${DOTS_DIR}/config/wezterm"
-  copy_dir_if_exists "${HOME}/.config/ghostty" "${DOTS_DIR}/config/ghostty"
   copy_dir_if_exists "${HOME}/.config/htop" "${DOTS_DIR}/config/htop"
   copy_dir_if_exists "${HOME}/.config/git" "${DOTS_DIR}/config/git"
-  copy_dir_if_exists "${HOME}/.config/raycast" "${DOTS_DIR}/config/raycast"
 
   # GitHub CLI (safe subset)
   if [[ -f "${HOME}/.config/gh/config.yml" ]]; then

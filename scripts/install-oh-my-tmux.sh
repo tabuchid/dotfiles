@@ -14,7 +14,7 @@ if [[ ! -d "${TMUX_DIR}/.git" ]]; then
     mv -v "${TMUX_DIR}" "${TMUX_DIR}.bak.$(date +%s)"
   fi
   log "Cloning ${TMUX_REPO} into ${TMUX_DIR}"
-  git clone --depth 1 "${TMUX_REPO}" "${TMUX_DIR}"
+  git clone --single-branch "${TMUX_REPO}" "${TMUX_DIR}"
 else
   log "Oh My Tmux already present; pulling updates"
   git -C "${TMUX_DIR}" pull --ff-only || true

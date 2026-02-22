@@ -6,7 +6,7 @@ export CPPFLAGS="-I/opt/homebrew/opt/postgresql@15/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/postgresql@15/lib/pkgconfig"
 
 # pnpm
-export PNPM_HOME="/Users/doug/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -35,10 +35,10 @@ fi
 
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
 # opencode
-export PATH=/Users/doug/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 # bun completions
-[ -s "/Users/doug/.bun/_bun" ] && source "/Users/doug/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

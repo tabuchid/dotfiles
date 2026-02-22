@@ -1,6 +1,5 @@
 tap "d12frosted/emacs-plus"
 tap "jondot/tap"
-tap "railwaycat/emacsmacport"
 tap "tilt-dev/tap"
 # Library and utilities for processing GIFs
 brew "giflib"
@@ -127,8 +126,8 @@ cask "1password-cli"
 cask "font-fira-code"
 cask "font-hack-nerd-font"
 cask "font-roboto"
-# Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty"
+# GPU-accelerated cross-platform terminal emulator
+cask "wezterm"
 # Menu bar manager
 cask "jordanbaird-ice"
 # Reverse proxy, secure introspectable tunnels to localhost
