@@ -36,6 +36,10 @@ restore_brew() {
   fi
 }
 
+install_sf_mono() {
+  "${REPO_DIR}/scripts/install-sf-mono.sh" || true
+}
+
 install_zsh_framework() {
   "${REPO_DIR}/scripts/install-zsh-quickstart.sh"
 }
@@ -102,6 +106,7 @@ main() {
   ensure_brew
   link_emacs_plus_build_config
   restore_brew
+  install_sf_mono
   setup_emacs_app
   install_zsh_framework
   install_tmux_framework

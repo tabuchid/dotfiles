@@ -5,6 +5,7 @@ A repeatable, documented setup for my macOS development environment.
 ## What this does
 - Restores Homebrew packages via `Brewfile`
 - Installs WezTerm as the primary terminal emulator
+- Installs `SF Mono` from macOS Terminal.app resources into `~/Library/Fonts` (when available)
 - Clones zsh framework `zsh-quickstart-kit` and links `~/.zshrc`
 - Clones tmux framework `gpakosz/.tmux` and links `~/.tmux.conf`
 - Installs/updates Doom Emacs (`~/.config/emacs`) and uses your config from `~/.config/doom`
@@ -70,5 +71,6 @@ per-host on the client). Do not enable `ForwardAgent yes` globally.
 - Secrets (SSH/GPG keys, tokens) are NOT stored here. GitHub CLI authentication and Raycast state are intentionally not synced. Re-authenticate on new machines as needed.
 - Python tooling/version management is handled with `uv`; other language runtimes are managed with `mise`.
 - zsh prompt uses Powerlevel10k (`~/.p10k.zsh`).
+- `SF Mono` is installed by `scripts/setup.sh` from macOS Terminal.app resources when available; WezTerm falls back to `Menlo`/`Monaco` if not present.
 - tmux uses Oh My Tmux with local overrides in `~/.tmux.conf.local`.
 - GitHub CLI auth is manual after setup: run `gh auth login`.

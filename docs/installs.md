@@ -157,8 +157,9 @@ Formulae are grouped for readability. Linked names point to Homebrew Formula pag
 
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
+| `SF Mono` (Apple) | `scripts/install-sf-mono.sh` (run by `scripts/setup.sh`) | Preferred WezTerm font on macOS | Copied from Terminal.app resources into `~/Library/Fonts` when available. | `~/.config/wezterm/wezterm.lua` | macOS-only; not distributed in this repo or Homebrew. |
 | [`font-fira-code`](https://formulae.brew.sh/cask/font-fira-code) | Brewfile (cask) | macOS app/cask | None (launch/sign in as needed) | N/A |  |
-| [`font-hack-nerd-font`](https://formulae.brew.sh/cask/font-hack-nerd-font) | Brewfile (cask) | macOS app/cask | None (launch/sign in as needed) | N/A |  |
+| [`font-hack-nerd-font`](https://formulae.brew.sh/cask/font-hack-nerd-font) | Brewfile (cask) | Nerd Font icons for terminal prompt/theme support | None (launch/sign in as needed) | `~/.p10k.zsh` | Powerlevel10k is configured with `nerdfont-v3`. |
 | [`font-roboto`](https://formulae.brew.sh/cask/font-roboto) | Brewfile (cask) | macOS app/cask | None (launch/sign in as needed) | N/A |  |
 
 ### Desktop apps
