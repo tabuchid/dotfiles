@@ -44,8 +44,9 @@ export DOOMDIR="$USER_DOOM_DIR_XDG"
 
 if [[ "$FRESH_INSTALL" == true ]]; then
   log "Running doom install"
-  "$DOOM_BIN" -y install || true
+  # Newer Doom CLI uses -! / --force instead of legacy -y.
+  "$DOOM_BIN" install -! || true
 else
   log "Running doom upgrade"
-  "$DOOM_BIN" -y upgrade || true
+  "$DOOM_BIN" upgrade -! || true
 fi
