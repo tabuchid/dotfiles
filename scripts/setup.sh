@@ -27,10 +27,44 @@ ensure_brew() {
   fi
 }
 
+ensure_pkg_config_for_source_builds() {
+  # Homebrew's build shim calls pkg-config via the opt path. If pkg-config was
+  # previously installed in a bad link state, emacs-plus fails its ImageMagick
+  # configure probe even when ImageMagick is installed.
+  if ! brew list --versions pkg-config >/dev/null 2>&1; then
+    log "Installing pkg-config preflight (required by emacs-plus source builds)"
+    brew install pkg-config || true
+  fi
+
+  local brew_prefix
+  brew_prefix="$(brew --prefix)"
+  if [[ -x "${brew_prefix}/bin/pkg-config" && ! -e "${brew_prefix}/opt/pkg-config" ]]; then
+    log "Repairing Homebrew pkg-config opt symlink"
+    brew unlink pkg-config >/dev/null 2>&1 || true
+    brew link pkg-config >/dev/null 2>&1 || true
+  fi
+}
+
+unlink_emacs_mac_if_linked() {
+  local brew_prefix emacs_link target
+  brew_prefix="$(brew --prefix)"
+  emacs_link="${brew_prefix}/bin/emacs"
+
+  [[ -L "${emacs_link}" ]] || return 0
+  target="$(readlink "${emacs_link}")"
+
+  if [[ "${target}" == *"emacs-mac"* ]]; then
+    log "Unlinking emacs-mac to avoid emacs-plus@30 link conflicts"
+    brew unlink emacs-mac || true
+  fi
+}
+
 restore_brew() {
   if [[ -f "${BREWFILE}" ]]; then
     log "Restoring Homebrew packages from Brewfile"
-    brew bundle --file "${BREWFILE}" --no-upgrade || true
+    if ! brew bundle --file "${BREWFILE}" --no-upgrade; then
+      log "Homebrew restore reported failures; continuing bootstrap (re-run setup after fixing the failing package)"
+    fi
   else
     log "No Brewfile found at ${BREWFILE}; skipping"
   fi
@@ -105,6 +139,8 @@ main() {
   ensure_clt
   ensure_brew
   link_emacs_plus_build_config
+  ensure_pkg_config_for_source_builds
+  unlink_emacs_mac_if_linked
   restore_brew
   install_sf_mono
   setup_emacs_app

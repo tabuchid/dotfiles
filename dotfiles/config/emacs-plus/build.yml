@@ -1,2 +1,2 @@
 patches:
-  - name: aggressive-read-buffering
+  - aggressive-read-buffering
