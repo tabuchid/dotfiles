@@ -18,5 +18,5 @@ return {
     primary_font,
     'Monaco',
   }),
-  font_size = 14,
+  font_size = 12,
 }
