@@ -31,6 +31,11 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# zoxide provides the `z` shell command/function.
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
 # eval "$(~/.local/bin/cursor-agent shell-integration zsh)"
 
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
