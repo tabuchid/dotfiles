@@ -74,3 +74,4 @@ per-host on the client). Do not enable `ForwardAgent yes` globally.
 - `SF Mono` is installed by `scripts/setup.sh` from macOS Terminal.app resources when available; WezTerm falls back to `Menlo`/`Monaco` if not present.
 - tmux uses Oh My Tmux with local overrides in `~/.tmux.conf.local`.
 - GitHub CLI auth is manual after setup: run `gh auth login`.
+- Doom Emacs is installed in `~/.config/emacs` (XDG path). If a legacy `~/.emacs.d/` directory exists, Emacs may ignore the XDG install and start with a stock experience. `scripts/install-doom.sh` now creates `~/.emacs.d/{early-init.el,init.el}` bootstrap shims (when missing) so Emacs forwards startup to Doom in `~/.config/emacs`.
