@@ -132,6 +132,7 @@ cask "1password-cli"
 cask "font-fira-code"
 cask "font-hack-nerd-font"
 cask "font-roboto"
+cask "font-symbols-only-nerd-font"
 # GPU-accelerated cross-platform terminal emulator
 cask "wezterm"
 # Menu bar manager

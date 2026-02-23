@@ -16,6 +16,81 @@ ensure_symlink() {
   ln -snf "${target}" "${link_path}"
 }
 
+install_symbols_nerd_font() {
+  if ! need_cmd brew; then
+    log "brew not found; skipping Symbols Nerd Font install"
+    return 0
+  fi
+
+  if brew list --cask font-symbols-only-nerd-font >/dev/null 2>&1; then
+    log "Symbols Nerd Font cask already installed"
+    return 0
+  fi
+
+  log "Installing Symbols Nerd Font (Symbols Only) cask"
+  brew install --cask font-symbols-only-nerd-font
+}
+
+install_symbola_font() {
+  local page_url="https://fontlibrary.org/en/font/symbola"
+  local zip_url
+  local zip_path
+  local tmpdir
+  local fonts_dir="${HOME}/Library/Fonts"
+
+  if compgen -G "${HOME}/Library/Fonts/Symbola*.ttf" >/dev/null; then
+    log "Symbola font already present in ${HOME}/Library/Fonts"
+    return 0
+  fi
+  if compgen -G "/Library/Fonts/Symbola*.ttf" >/dev/null; then
+    log "Symbola font already present in /Library/Fonts"
+    return 0
+  fi
+
+  if ! need_cmd curl; then
+    log "curl not found; skipping Symbola font install"
+    return 0
+  fi
+
+  if ! need_cmd unzip; then
+    log "unzip not found; skipping Symbola font install"
+    return 0
+  fi
+
+  log "Resolving Symbola font download URL"
+  zip_path="$(curl -fsSL "${page_url}" | grep -Eo '/assets/downloads/symbola/[^"]+/symbola\.zip' | head -1 || true)"
+  if [[ -n "${zip_path}" ]]; then
+    zip_url="https://fontlibrary.org${zip_path}"
+  else
+    zip_url="$(curl -fsSL "${page_url}" | grep -Eo 'https://fontlibrary\.org/assets/downloads/symbola/[^"]+/symbola\.zip' | head -1 || true)"
+  fi
+  if [[ -z "${zip_url}" ]]; then
+    log "Could not resolve Symbola download URL; skipping"
+    return 0
+  fi
+
+  tmpdir="$(mktemp -d)"
+  mkdir -p "${fonts_dir}"
+
+  log "Downloading Symbola font archive"
+  curl -fsSL "${zip_url}" -o "${tmpdir}/symbola.zip"
+  unzip -oq "${tmpdir}/symbola.zip" -d "${tmpdir}/unzipped"
+
+  if compgen -G "${tmpdir}/unzipped/*.ttf" >/dev/null; then
+    cp -f "${tmpdir}/unzipped/"*.ttf "${fonts_dir}/"
+    log "Installed Symbola font files into ${fonts_dir}"
+  else
+    log "No TTF files found in Symbola archive; skipping"
+  fi
+
+  rm -rf "${tmpdir}"
+}
+
+install_doom_fonts() {
+  install_symbols_nerd_font || log "Symbols Nerd Font install failed; continuing"
+  install_symbola_font || log "Symbola font install failed; continuing"
+}
+
 install_uv_tools() {
   local tool
   local -a tools=(
@@ -77,6 +152,7 @@ install_dockfmt_shim() {
 }
 
 main() {
+  install_doom_fonts
   install_dockfmt_shim
   install_mise_node_tools
   install_uv_tools
