@@ -86,6 +86,10 @@ install_doom() {
   bash "${REPO_DIR}/scripts/install-doom.sh"
 }
 
+install_doom_runtime_tools() {
+  bash "${REPO_DIR}/scripts/install-doom-runtime-tools.sh"
+}
+
 sync_editors() {
   "${REPO_DIR}/scripts/sync-editors.sh" || true
 }
@@ -148,6 +152,7 @@ main() {
   install_tmux_framework
   sync_editors
   link_dotfiles
+  install_doom_runtime_tools
   install_doom
   log "Done. Open a new terminal session to pick up changes."
 }

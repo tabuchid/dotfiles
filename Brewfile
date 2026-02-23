@@ -23,6 +23,10 @@ brew "coreutils"
 brew "cryptography"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Utility for managing environment variables per-project
+brew "direnv"
+# Dockerfile formatter
+brew "dockerfmt"
 # Programming language for highly scalable real-time systems
 brew "erlang"
 # Perl script to extracts URLs from emails or plain text
@@ -85,14 +89,22 @@ brew "make"
 brew "tmux"
 # Process manager for Procfile-based applications and tmux
 brew "overmind"
+# Universal markup converter (used by Doom markdown preview)
+brew "pandoc"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
+# Shell script analysis tool
+brew "shellcheck"
+# Shell parser, formatter, and interpreter
+brew "shfmt"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
+# Tool for building, changing, and versioning infrastructure
+brew "terraform"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # URL extractor/launcher
