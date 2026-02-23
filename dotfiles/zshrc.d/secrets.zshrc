@@ -1,8 +1,23 @@
-export JIRA_EMAIL="$(op read 'op://Private/Jira API Token/email' --account my.1password.com)"
-export JIRA_API_TOKEN="$(op read 'op://Private/Jira API Token/credential' --account my.1password.com)"
-export JIRA_DOMAIN="$(op read 'op://Private/Jira API Token/domain' --account my.1password.com)"
+typeset -g DOTFILES_SECRETS_CACHE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/secrets.1password.env.zsh"
 
-export GITHUB_PACKAGES_TOKEN="$(op read 'op://Private/GitHub Packages Token/credential' --account my.1password.com)"
+if [[ -r "${DOTFILES_SECRETS_CACHE_FILE}" ]]; then
+  source "${DOTFILES_SECRETS_CACHE_FILE}"
+fi
 
-export SENTRY_AUTH_TOKEN="$(op read 'op://Private/Sentry Auth Token/credential' --account my.1password.com)"
-export SENTRY_ORG="$(op read 'op://Private/Sentry Auth Token/org' --account my.1password.com)"
+sync_dotfiles_secrets() {
+  local repo_script
+
+  for repo_script in \
+    "$HOME/Developer/dotfiles/scripts/sync-op-secrets.sh" \
+    "$HOME/Development/dotfiles/scripts/sync-op-secrets.sh"
+  do
+    if [[ -x "${repo_script}" ]]; then
+      "${repo_script}" "$@" || return $?
+      source "${DOTFILES_SECRETS_CACHE_FILE}"
+      return 0
+    fi
+  done
+
+  print -u2 "sync_dotfiles_secrets: sync-op-secrets.sh not found in ~/Developer/dotfiles or ~/Development/dotfiles"
+  return 1
+}

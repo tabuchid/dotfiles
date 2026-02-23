@@ -94,6 +94,15 @@ sync_editors() {
   "${REPO_DIR}/scripts/sync-editors.sh" || true
 }
 
+sync_shell_secrets_cache() {
+  if [[ -x "${REPO_DIR}/scripts/sync-op-secrets.sh" ]]; then
+    log "Syncing cached shell secrets from 1Password"
+    if ! "${REPO_DIR}/scripts/sync-op-secrets.sh"; then
+      log "Skipping shell secrets cache sync (1Password CLI/app may not be ready yet). Re-run: ${REPO_DIR}/scripts/sync-op-secrets.sh"
+    fi
+  fi
+}
+
 link_dotfiles() {
   "${REPO_DIR}/scripts/link.sh"
 }
@@ -152,6 +161,7 @@ main() {
   install_tmux_framework
   sync_editors
   link_dotfiles
+  sync_shell_secrets_cache
   install_doom_runtime_tools
   install_doom
   log "Done. Open a new terminal session to pick up changes."
