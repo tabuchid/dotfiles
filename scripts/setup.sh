@@ -83,7 +83,7 @@ install_tmux_framework() {
 }
 
 install_doom() {
-  "${REPO_DIR}/scripts/install-doom.sh"
+  bash "${REPO_DIR}/scripts/install-doom.sh"
 }
 
 sync_editors() {
