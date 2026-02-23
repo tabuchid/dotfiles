@@ -137,6 +137,8 @@ cask "font-symbols-only-nerd-font"
 cask "wezterm"
 # Menu bar manager
 cask "jordanbaird-ice"
+# AI-powered notepad for meetings
+cask "granola"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Plugin for AWS CLI to start and end sessions that connect to managed instances
