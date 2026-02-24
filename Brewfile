@@ -137,6 +137,8 @@ cask "font-symbols-only-nerd-font"
 cask "wezterm"
 # Menu bar manager
 cask "jordanbaird-ice"
+# Launcher and productivity tool
+cask "raycast"
 # AI-powered notepad for meetings
 cask "granola"
 # Reverse proxy, secure introspectable tunnels to localhost
