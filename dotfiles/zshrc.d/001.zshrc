@@ -49,10 +49,10 @@ export PATH="$HOME/.opencode/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# mise - use shims so project/tool versions take precedence over Homebrew/system bins
+# mise - hook-based activation ensures project tool versions take precedence
 if command -v mise >/dev/null 2>&1; then
   mise_bin="$(whence -p mise 2>/dev/null)"
-  eval "$(mise activate zsh --shims)"
+  eval "$(mise activate zsh)"
 
   # Keep mise completion available without depending on the OMZ mise plugin.
   mise_comp_dir="${ZSH_CACHE_DIR:-$HOME/.zsh/cache}/completions"

@@ -28,7 +28,7 @@ dotfiles/editors/**/User/globalStorage/
 **/.gh/
 
 # GitHub CLI: keep config.yml & extensions.txt only
-.dotfiles/**/config/gh/*
+dotfiles/**/config/gh/*
 !dotfiles/**/config/gh/config.yml
 !dotfiles/**/config/gh/extensions.txt
 
