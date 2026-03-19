@@ -167,6 +167,7 @@ Formulae are grouped for readability. Linked names point to Homebrew Formula pag
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
 | [`jordanbaird-ice`](https://formulae.brew.sh/cask/jordanbaird-ice) | Brewfile (cask) | Menu bar manager | Grant macOS permissions if prompted. | App-managed | GUI onboarding is manual. |
+| [`raycast`](https://formulae.brew.sh/cask/raycast) | Brewfile (cask) | Launcher/productivity app | Launch and sign in manually if used. Manage Raycast Cloud Sync in-app. | App-managed | Repo intentionally does not sync or link Raycast config/state because it contains tokens and generated artifacts. |
 | [`spotify`](https://formulae.brew.sh/cask/spotify) | Brewfile (cask) | Music streaming service | Sign in manually. | App-managed | Optional personal app. |
 | [`wezterm`](https://formulae.brew.sh/cask/wezterm) | Brewfile (cask) | GPU-accelerated cross-platform terminal emulator | Primary terminal. Config is tracked and linked; verify app launches and reads config. | `~/.config/wezterm/wezterm.lua` | Replaces Ghostty in this setup. |
 
@@ -206,7 +207,6 @@ These are restored via `brew bundle` `vscode` entries. VS Code/Cursor apps thems
 
 | Name | Installed By | Purpose | Post-Install Setup | Config Path | Notes |
 |---|---|---|---|---|---|
-| Raycast | Manual install (not in Brewfile) | Launcher/productivity app | Install/sign in manually if used | App-managed | Repo no longer syncs Raycast config because it contains secrets/generated state. |
 | Visual Studio Code | Manual install (not in Brewfile) | Editor used by sync scripts | Install app to `/Applications/Visual Studio Code.app` | `~/Library/Application Support/Code/User` | `sync-editors.sh` reads and exports this path. |
 | Cursor | Manual install (not in Brewfile) | Editor used by sync scripts | Install app to `/Applications/Cursor.app` | `~/Library/Application Support/Cursor/User` | `sync-editors.sh` reads and exports this path. |
 
@@ -229,7 +229,7 @@ No local database/broker services are currently installed by `Brewfile`.
 
 - This repo should not track secrets, tokens, or auth state files.
 - `~/.config/gh/hosts.yml` is intentionally not tracked or linked.
-- Raycast config/state syncing is disabled in this repo because it contains tokens and generated artifacts.
+- Raycast is installed by `Brewfile`, but Raycast config/state syncing and linking are disabled in this repo because they contain tokens and generated artifacts.
 - 1Password SSH agent is the recommended SSH auth path and should be configured before cloning over SSH.
 - Review diffs and run a secret scan before committing sync output.
 

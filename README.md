@@ -72,7 +72,8 @@ per-host on the client). Do not enable `ForwardAgent yes` globally.
 
 ## Notes
 - Secrets (SSH/GPG keys, tokens) are NOT stored here. Shell token mappings (env var -> 1Password reference) are tracked in `scripts/sync-op-secrets.manifest`, and values are read from 1Password during `./scripts/setup.sh` (or `./scripts/sync-op-secrets.sh`) into a local cache file at `~/.config/dotfiles/secrets.1password.env.zsh` (outside the repo, `chmod 600`).
-- GitHub CLI authentication and Raycast state are intentionally not synced. Re-authenticate on new machines as needed.
+- GitHub CLI authentication is intentionally not synced. Re-authenticate on new machines as needed.
+- Raycast is installed by `Brewfile`, but its config/state is intentionally not synced or linked here. Sign in and manage Raycast Cloud Sync in the app if you use it.
 - Python tooling/version management is handled with `uv`; other language runtimes are managed with `mise`.
 - zsh prompt uses Powerlevel10k (`~/.p10k.zsh`).
 - `SF Mono` is installed by `scripts/setup.sh` from macOS Terminal.app resources when available; WezTerm falls back to `Menlo`/`Monaco` if not present.

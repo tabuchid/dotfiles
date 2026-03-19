@@ -32,9 +32,8 @@ dotfiles/**/config/gh/*
 !dotfiles/**/config/gh/config.yml
 !dotfiles/**/config/gh/extensions.txt
 
-# Raycast: generally safe settings; still ignore cache and sync folders
-**/.config/raycast/**/cache/
-**/.config/raycast/**/sync/
+# Raycast: install via Brewfile, but never track app-managed config/state
+**/.config/raycast/
 **/.git-credential*
 
 # Machine-specific shell scripts

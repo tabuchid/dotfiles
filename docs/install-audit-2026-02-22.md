@@ -9,7 +9,7 @@ Inventory counts reviewed: `3` taps, `57` formulae, `9` casks, `17` VS Code exte
 ## Findings
 
 1. `[P0]` No current repo-tracked secret/token exposure found in the reviewed paths after cleanup.
-   - Evidence: Raycast state and `gh` auth state are no longer linked/synced (`/Users/tabuchid/Developer/dotfiles/scripts/link.sh:24`, `/Users/tabuchid/Developer/dotfiles/scripts/sync-from-home.sh:88`, `/Users/tabuchid/Developer/dotfiles/README.md:69`, `/Users/tabuchid/Developer/dotfiles/docs/installs.md:227`).
+   - Evidence: Raycast config/state and `gh` auth state are no longer linked/synced even though Raycast itself remains Brewfile-managed (`/Users/tabuchid/Developer/dotfiles/scripts/link.sh:24`, `/Users/tabuchid/Developer/dotfiles/scripts/sync-from-home.sh:88`, `/Users/tabuchid/Developer/dotfiles/README.md:69`, `/Users/tabuchid/Developer/dotfiles/docs/installs.md:227`).
    - Impact: The prior token-bearing Raycast/GH auth risk is remediated in the repo baseline.
 
 2. `[P2]` Machine state may not yet be converged to the `Brewfile` on a given host until `brew bundle install` / `./scripts/setup.sh` completes.
@@ -201,11 +201,11 @@ Columns: `item_type`, `item_name`, `installed_by`, `config_path`, `requires_post
 | vscode_extension | vscodevim.vim | /Users/tabuchid/Developer/dotfiles/Brewfile:148 | ~/Library/Application Support/Code/User; ~/Library/Application Support/Cursor/User | yes | Install VS Code/Cursor apps if using sync/restore workflow | ok | /Users/tabuchid/Developer/dotfiles/Brewfile:148; /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:29; /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:43 | https://marketplace.visualstudio.com/items?itemName=vscodevim.vim | Purpose: Vim emulation |
 | vscode_extension | waderyan.gitblame | /Users/tabuchid/Developer/dotfiles/Brewfile:149 | ~/Library/Application Support/Code/User; ~/Library/Application Support/Cursor/User | yes | Install VS Code/Cursor apps if using sync/restore workflow | ok | /Users/tabuchid/Developer/dotfiles/Brewfile:149; /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:29; /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:43 | https://marketplace.visualstudio.com/items?itemName=waderyan.gitblame | Purpose: Inline git blame |
 
-### Configured but Not Installed by Brewfile
+### App-Managed or Manual Setup Items
 
 | item_type | item_name | installed_by | config_path | requires_post_install_setup | required_setup_steps | status | evidence_local | sources | recommended_change |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| manual_app | Raycast | manual app (sync/link intentionally disabled) | App-managed | yes | Manual install/sign-in if used | intentional_out_of_band | /Users/tabuchid/Developer/dotfiles/README.md:69; /Users/tabuchid/Developer/dotfiles/docs/installs.md:204 | https://www.raycast.com/ | none |
+| brew_cask_app | Raycast | Brewfile (cask); sync/link intentionally disabled | App-managed | yes | Launch/sign in manually if used; manage Raycast Cloud Sync in-app | ok | /Users/tabuchid/Developer/dotfiles/Brewfile:141; /Users/tabuchid/Developer/dotfiles/README.md:69; /Users/tabuchid/Developer/dotfiles/docs/installs.md:167 | https://www.raycast.com/ | none |
 | manual_app | Visual Studio Code | manual app for editor sync workflow | /Applications/Visual Studio Code.app; ~/Library/Application Support/Code/User | yes | Install app if using editor sync/restore workflow | intentional_out_of_band | /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:29; /Users/tabuchid/Developer/dotfiles/docs/installs.md:205 | https://code.visualstudio.com/ | none |
 | manual_app | Cursor | manual app for editor sync workflow | /Applications/Cursor.app; ~/Library/Application Support/Cursor/User | yes | Install app if using editor sync/restore workflow | intentional_out_of_band | /Users/tabuchid/Developer/dotfiles/scripts/sync-editors.sh:43; /Users/tabuchid/Developer/dotfiles/docs/installs.md:206 | https://www.cursor.com/ | none |
 
@@ -267,7 +267,7 @@ Columns: `item_type`, `item_name`, `installed_by`, `config_path`, `requires_post
 
 1. `brew bundle check` can still report missing dependencies on a given machine until `brew bundle install` / `./scripts/setup.sh` is run.
 2. End-to-end runtime validation after the repo changes is still machine-specific and may remain pending (Doom health, WezTerm launch/config, zsh/tmux behavior).
-3. The Raycast cleanup deletion set was intentionally large (generated state removal); review before commit if not already committed.
+3. Keep Raycast install policy and Raycast state-exclusion docs aligned if the Brewfile or sync/link rules change again.
 
 ## Sources
 
