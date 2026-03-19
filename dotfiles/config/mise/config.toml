@@ -3,7 +3,7 @@
 node = "20.20.0"
 usage = "latest"
 rust = "1.84.0"
-ruby = "latest"
+ruby = "3.4.2"
 
 [settings]
 experimental = true
