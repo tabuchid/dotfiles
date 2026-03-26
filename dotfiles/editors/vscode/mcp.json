@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "icm": {
+      "args": [
+        "serve"
+      ],
+      "command": "/opt/homebrew/bin/icm",
+      "env": {}
+    }
+  }
+}
