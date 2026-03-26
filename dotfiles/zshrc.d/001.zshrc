@@ -69,3 +69,5 @@ if command -v mise >/dev/null 2>&1; then
   unset mise_bin
   unset mise_comp_dir
 fi
+
+alias lg='lazygit'
