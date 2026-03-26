@@ -271,7 +271,7 @@ tmux_conf_theme_right_separator_sub="|"
 #     - #{username_ssh}
 tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} "
 #tmux_conf_theme_status_left=" ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} | #{pretty_pane_current_path} "
-tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} "
+tmux_conf_theme_status_right=" #{prefix}#{mouse}#{pairing}#{synchronized}#{?battery_status,#{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , #{kube_context} , %R , %d %b | #{username}#{root} | #{hostname} "
 
 # status left style
 tmux_conf_theme_status_left_fg="$tmux_conf_theme_colour_6,$tmux_conf_theme_colour_7,$tmux_conf_theme_colour_8"
@@ -467,37 +467,9 @@ tmux_conf_uninstall_plugins_on_reload=true
 #
 # # /!\ do not "uncomment" the functions: the leading "# " characters are needed
 #
-# # usage: #{weather}
-# weather() {                                         # see https://github.com/chubin/wttr.in#one-line-output
-#   curl -f -s -m 2 'wttr.in?format=3' || printf '\n' # /!\ make sure curl is installed
-#   sleep 900                                         # sleep for 15 minutes, throttle network requests whatever the value of status-interval
-# }
-#
-# # usage: #{online}
-# online() {
-#   ping -c 1 1.1.1.1 >/dev/null 2>&1 && printf '✔' || printf '✘'
-# }
-#
-# # usage: #{wan_ip_v4}
-# wan_ip_v4() {
-#   curl -f -s -m 2 -4 ifconfig.me
-#   sleep 300                                         # sleep for 5 minutes, throttle network requests whatever the value of status-interval
-# }
-#
-# # usage: #{wan_ip_v6}
-# wan_ip_v6() {
-#   curl -f -s -m 2 -6 ifconfig.me
-#   sleep 300                                         # sleep for 5 minutes, throttle network requests whatever the value of status-interval
-# }
-#
-# # usage: #{github_stars}, #{github_stars tmux/tmux}, ...
-# github_stars() {
-#   repository=${1##*https://github.com/}
-#   repository=${repository%% *}
-#   repository=${repository%%.git}
-#   url="https://api.github.com/repos/${repository:-gpakosz/.tmux}"
-#   curl -s "$url" | perl -MJSON::PP=decode_json -CO -0777 -E '$response = decode_json(readline *STDIN); say ($response->{stargazers_count})'
-#   sleep 300                                         # sleep for 5 minutes, throttle network requests whatever the value of status-interval
+# # usage: #{kube_context}
+# kube_context() {
+#   kubectl config current-context 2>/dev/null
 # }
 #
 # "$@"

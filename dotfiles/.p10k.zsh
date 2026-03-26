@@ -1230,9 +1230,8 @@
   # typeset -g POWERLEVEL9K_HASKELL_STACK_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
-  # Show kubecontext only when the command you are typing invokes one of these tools.
-  # Tip: Remove the next line to always show kubecontext.
-  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|skaffold|kubent|kubecolor|cmctl|sparkctl'
+  # Always show kubecontext — the danger is BEFORE you type a command.
+  # typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|flux|fluxctl|stern|kubeseal|skaffold|kubent|kubecolor|cmctl|sparkctl'
 
   # Kubernetes context classes for the purpose of using different colors, icons and expansions with
   # different contexts.
@@ -1261,11 +1260,25 @@
   #   typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_VISUAL_IDENTIFIER_EXPANSION='⭐'
   #   typeset -g POWERLEVEL9K_KUBECONTEXT_TEST_CONTENT_EXPANSION='> ${P9K_CONTENT} <'
   typeset -g POWERLEVEL9K_KUBECONTEXT_CLASSES=(
-      # '*prod*'  PROD    # These values are examples that are unlikely
-      # '*test*'  TEST    # to match your needs. Customize them as needed.
-      '*'       DEFAULT)
-  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=134
-  # typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_VISUAL_IDENTIFIER_EXPANSION='⭐'
+      '*kind*'                        LOCAL      # local Kind cluster — safe
+      '*non-prod*'                    NONPROD    # staging EKS (eks-non-prod) — must be before *prod*
+      '*prod*'                        PROD       # production EKS (eks-prod-jp)
+      '*data-eng*'                    DATA       # data engineering
+      '*terraform-infrastructure*'    EKS        # legacy context name (before rename)
+      '*'                             DEFAULT)
+  typeset -g POWERLEVEL9K_KUBECONTEXT_LOCAL_FOREGROUND=2      # green
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_FOREGROUND=1       # red — danger
+  typeset -g POWERLEVEL9K_KUBECONTEXT_NONPROD_FOREGROUND=3    # yellow
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DATA_FOREGROUND=6       # cyan
+  typeset -g POWERLEVEL9K_KUBECONTEXT_EKS_FOREGROUND=3        # yellow — legacy fallback
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DEFAULT_FOREGROUND=134  # purple
+
+  # Content expansion for each class (show name, strip /default namespace)
+  typeset -g POWERLEVEL9K_KUBECONTEXT_LOCAL_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default}'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_PROD_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default}'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_NONPROD_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default}'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_DATA_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default}'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_EKS_CONTENT_EXPANSION='${P9K_KUBECONTEXT_NAME}${${:-/$P9K_KUBECONTEXT_NAMESPACE}:#/default}'
 
   # Use POWERLEVEL9K_KUBECONTEXT_CONTENT_EXPANSION to specify the content displayed by kubecontext
   # segment. Parameter expansions are very flexible and fast, too. See reference:
