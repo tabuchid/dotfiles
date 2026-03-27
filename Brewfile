@@ -73,6 +73,8 @@ brew "jpeg"
 brew "jq"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
+# Kubernetes terminal UI
+brew "k9s"
 # JIT library for the GNU compiler collection
 brew "libgccjit"
 # Postgres C API library
