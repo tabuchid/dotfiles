@@ -51,6 +51,7 @@ main() {
     ["${DOTS_DIR}/config/wezterm"]="${HOME}/.config/wezterm"
     ["${DOTS_DIR}/config/htop"]="${HOME}/.config/htop"
     ["${DOTS_DIR}/config/git"]="${HOME}/.config/git"
+    ["${DOTS_DIR}/config/eza"]="${HOME}/.config/eza"
   )
   for src in "${!MAP[@]}"; do
     dst="${MAP[$src]}"
