@@ -27,6 +27,8 @@ brew "curl"
 brew "direnv"
 # Dockerfile formatter
 brew "dockerfmt"
+# Modern ls replacement with git integration and color
+brew "eza"
 # Programming language for highly scalable real-time systems
 brew "erlang"
 # Perl script to extracts URLs from emails or plain text
