@@ -39,6 +39,7 @@ main() {
     ["${DOTS_DIR}/.gitconfig"]="${HOME}/.gitconfig"
     ["${DOTS_DIR}/.p10k.zsh"]="${HOME}/.p10k.zsh"
     ["${DOTS_DIR}/.tmux.conf.local"]="${HOME}/.tmux.conf.local"
+    ["${DOTS_DIR}/.zshenv"]="${HOME}/.zshenv"
     ["${DOTS_DIR}/.zprofile"]="${HOME}/.zprofile"
     ["${DOTS_DIR}/doom.d"]="${HOME}/.config/doom"
     ["${DOTS_DIR}/editors/vscode"]="${HOME}/Library/Application Support/Code/User"
