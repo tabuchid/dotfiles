@@ -35,26 +35,6 @@ backup_and_link() {
   ln -sv "${src}" "${dst}"
 }
 
-link_gh_safe_files() {
-  local gh_src_dir="${DOTS_DIR}/config/gh"
-  local gh_dst_dir="${HOME}/.config/gh"
-  local gh_cfg_src="${gh_src_dir}/config.yml"
-  local gh_cfg_dst="${gh_dst_dir}/config.yml"
-
-  # Guard: if ~/.config/gh is a directory symlink, the dst path resolves into
-  # the repo and backup_and_link would create a self-referencing symlink.
-  if [[ -L "${gh_dst_dir}" ]]; then
-    log "ERROR: ${gh_dst_dir} is a directory symlink — remove it and create a real directory first"
-    return 1
-  fi
-
-  if [[ -e "${gh_cfg_src}" ]]; then
-    backup_and_link "${gh_cfg_src}" "${gh_cfg_dst}"
-  else
-    log "Skip (missing): ${gh_cfg_src}"
-  fi
-}
-
 main() {
   declare -A MAP=(
     ["${DOTS_DIR}/.gitconfig"]="${HOME}/.gitconfig"
@@ -83,7 +63,6 @@ main() {
       log "Skip (missing): ${src}"
     fi
   done
-  link_gh_safe_files
 }
 
 main "$@"
