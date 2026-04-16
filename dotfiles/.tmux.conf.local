@@ -389,6 +389,10 @@ set -g history-limit 10000
 # start with mouse mode enabled
 set -g mouse on
 
+# Shift+Enter passthrough for Claude Code (CSI u encoding)
+set -as terminal-features 'tmux-256color:extkeys'
+bind-key -n S-Enter send-keys Escape "[13;2u"
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 #set -g status-keys vi

@@ -71,3 +71,12 @@ if command -v mise >/dev/null 2>&1; then
 fi
 
 alias lg='lazygit'
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/doug/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Gangway tab completion
+[ -f "/Users/doug/.config/gangway/completions.zsh" ] && source "/Users/doug/.config/gangway/completions.zsh"

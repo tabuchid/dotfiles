@@ -19,6 +19,13 @@ return {
     'Monaco',
   }),
   font_size = 12,
+  keys = {
+    {
+      key = 'Enter',
+      mods = 'SHIFT',
+      action = wezterm.action.SendString('\x1b[13;2u'),
+    },
+  },
   -- Catppuccin Mocha
   colors = {
     foreground = "#CDD6F4",

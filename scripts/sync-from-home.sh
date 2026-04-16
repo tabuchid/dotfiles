@@ -6,9 +6,20 @@ DOTS_DIR="${REPO_DIR}/dotfiles"
 
 log() { printf "[sync] %s\n" "$*"; }
 
+# Return 0 (true) if two paths resolve to the same file (symlink or hard link).
+same_file() {
+  local a="$1" b="$2"
+  [[ -e "${a}" && -e "${b}" ]] || return 1
+  [[ "$(stat -L -f '%i' "${a}")" == "$(stat -L -f '%i' "${b}")" ]]
+}
+
 copy_if_exists() {
   local src="$1" dst="$2"
   if [[ -f "${src}" ]]; then
+    if same_file "${src}" "${dst}"; then
+      log "Skip (same file): ${src}"
+      return 0
+    fi
     mkdir -p "$(dirname "${dst}")"
     cp -v "${src}" "${dst}"
   else
@@ -19,6 +30,11 @@ copy_if_exists() {
 copy_dir_if_exists() {
   local src="$1" dst="$2"
   if [[ -d "${src}" ]]; then
+    # Skip if src is a symlink pointing to dst
+    if [[ -L "${src}" ]] && same_file "${src}" "${dst}"; then
+      log "Skip (same dir): ${src}"
+      return 0
+    fi
     mkdir -p "${dst}"
     if command -v rsync >/dev/null 2>&1; then
       rsync -a --delete "${src}/" "${dst}/"
@@ -87,8 +103,12 @@ main() {
 
   # GitHub CLI (safe subset)
   if [[ -f "${HOME}/.config/gh/config.yml" ]]; then
-    mkdir -p "${DOTS_DIR}/config/gh"
-    install -m 0644 "${HOME}/.config/gh/config.yml" "${DOTS_DIR}/config/gh/config.yml"
+    if same_file "${HOME}/.config/gh/config.yml" "${DOTS_DIR}/config/gh/config.yml"; then
+      log "Skip (same file): ${HOME}/.config/gh/config.yml"
+    else
+      mkdir -p "${DOTS_DIR}/config/gh"
+      install -m 0644 "${HOME}/.config/gh/config.yml" "${DOTS_DIR}/config/gh/config.yml"
+    fi
   fi
   if command -v gh >/dev/null 2>&1; then
     gh extension list | awk '{print $1}' > "${DOTS_DIR}/config/gh/extensions.txt" || true
