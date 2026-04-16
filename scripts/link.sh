@@ -6,10 +6,24 @@ DOTS_DIR="${REPO_DIR}/dotfiles"
 
 log() { printf "[link] %s\n" "$*"; }
 
+# Return 0 (true) if two paths resolve to the same file (symlink or hard link).
+same_file() {
+  local a="$1" b="$2"
+  [[ -e "${a}" && -e "${b}" ]] || return 1
+  [[ "$(stat -L -f '%i' "${a}")" == "$(stat -L -f '%i' "${b}")" ]]
+}
+
 backup_and_link() {
   local src="$1" dst="$2"
   if [[ -L "${dst}" && "$(readlink "${dst}")" == "${src}" ]]; then
     log "OK  ${dst} -> ${src}"
+    return 0
+  fi
+  # Skip if dst is a hard link to src — creating a symlink would be circular
+  if same_file "${src}" "${dst}"; then
+    log "Replacing hard link with symlink: ${dst} -> ${src}"
+    rm "${dst}"
+    ln -sv "${src}" "${dst}"
     return 0
   fi
   if [[ -e "${dst}" ]]; then
@@ -26,6 +40,13 @@ link_gh_safe_files() {
   local gh_dst_dir="${HOME}/.config/gh"
   local gh_cfg_src="${gh_src_dir}/config.yml"
   local gh_cfg_dst="${gh_dst_dir}/config.yml"
+
+  # Guard: if ~/.config/gh is a directory symlink, the dst path resolves into
+  # the repo and backup_and_link would create a self-referencing symlink.
+  if [[ -L "${gh_dst_dir}" ]]; then
+    log "ERROR: ${gh_dst_dir} is a directory symlink — remove it and create a real directory first"
+    return 1
+  fi
 
   if [[ -e "${gh_cfg_src}" ]]; then
     backup_and_link "${gh_cfg_src}" "${gh_cfg_dst}"
