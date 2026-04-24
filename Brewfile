@@ -87,6 +87,8 @@ brew "librsvg"
 brew "libvterm"
 # YAML Parser
 brew "libyaml"
+# Language server for Helm charts (used by Doom Emacs for chart templates)
+brew "helm-ls"
 # Utility for directing compilation
 brew "make"
 # Terminal multiplexer

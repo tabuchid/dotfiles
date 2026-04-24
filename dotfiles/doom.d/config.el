@@ -77,8 +77,16 @@
 
 
 (after! lsp-mode
-  ;; Ensure correct Ruby LSP configuration
-  (setq lsp-disabled-clients '(solargraph rubocop-ls))
+  ;; Ensure correct Ruby LSP configuration.
+  ;; The `(MODE . CLIENTS)` cons form scopes the disable to a specific
+  ;; major mode — here, disable yamlls whenever the helm template derived
+  ;; mode is active. Setting this globally avoids a hook-ordering race
+  ;; where yaml-mode-hook's `lsp!` starts yamlls before a buffer-local
+  ;; setq can take effect.
+  (setq lsp-disabled-clients
+        '(solargraph
+          rubocop-ls
+          (doug/helm-template-mode . (yamlls))))
   (setq lsp-ruby-lsp-use-bundler nil)
   )
 
@@ -89,3 +97,35 @@
   )
 
 (add-to-list 'auto-mode-alist '("\\.env\\'" . sh-mode))
+
+;; Helm chart templates mix Go template syntax with YAML, which yamlls
+;; can't parse (produces ~170 false-positive diagnostics per file).
+;; Install with `brew install helm-ls`. Defined at top level (not inside
+;; `after! lsp-mode`) so the mode and auto-mode-alist entry exist before
+;; any buffer is opened — otherwise yaml-mode wins the race.
+(define-derived-mode doug/helm-template-mode yaml-mode "Helm"
+  "yaml-mode variant for Helm chart templates. Uses helm-ls, not yamlls.")
+
+(add-to-list 'auto-mode-alist
+             '("/charts/[^/]+/templates/.*\\.ya?ml\\'" . doug/helm-template-mode))
+
+(add-hook 'doug/helm-template-mode-hook
+          (defun doug/helm-template-mode-setup ()
+            ;; yamlls is blocked globally via the (MODE . CLIENTS) cons in
+            ;; `lsp-disabled-clients`, so it won't attach.
+            ;; Neutralize format-on-save — LSP formatter rewrites Go templating.
+            (setq-local +format-with-lsp nil)
+            (setq-local format-all-formatters nil)
+            ;; `:lang yaml +lsp` in Doom doesn't hook `lsp-deferred` into
+            ;; `yaml-mode-hook` (likely hooks yaml-ts-mode instead), so the
+            ;; derived mode wouldn't auto-start lsp. Trigger it here.
+            (lsp-deferred)))
+
+(after! lsp-mode
+  ;; lsp-mode 9.0+ ships `lsp-kubernetes-helm.el` which registers a `helm-ls`
+  ;; client that activates via `(lsp-activate-on "helm-ls")` — i.e. when the
+  ;; buffer's language-id is "helm-ls". But nothing in the default
+  ;; `lsp-language-id-configuration` resolves to that; yaml files map to
+  ;; "yaml" and trigger yamlls instead. Map our derived mode → "helm-ls".
+  (add-to-list 'lsp-language-id-configuration
+               '(doug/helm-template-mode . "helm-ls")))
