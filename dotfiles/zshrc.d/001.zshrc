@@ -36,7 +36,24 @@ fi
 
 [ -f "${0:a:h}/secrets.zshrc" ] && source "${0:a:h}/secrets.zshrc"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf integration. We bypass ~/.fzf.zsh (Homebrew-generated, ignored via
+# zqs-settings/load-fzf-zsh-plugin=false) and load fzf ourselves so we can
+# filter its options snapshot. fzf's `--zsh` output saves shell options into
+# `options=(${(j: :)${(kv)options[@]}})` and later evals that string to restore
+# them. Recent zsh treats `zle` as a read-only state option, so the eval errors
+# with "can't change option: zle". Rewrite the snapshot-builder to drop the
+# `zle <state>` pair before stringifying.
+if command -v fzf >/dev/null 2>&1; then
+  source <(
+    fzf --zsh | perl -pe '
+      s{
+        ^(\s*)(__fzf_(?:key_bindings|completion)_options)="options=\(\$\{\(j:\ :\)\$\{\(kv\)options\[\@\]\}\}\)"
+      }{
+        $1 . "{ local -a _fzf_opts=(\"\${(kv)options[\@]}\"); local _fzf_i=\${_fzf_opts[(i)zle]}; (( _fzf_i <= \${#_fzf_opts} )) && _fzf_opts[_fzf_i,_fzf_i+1]=(); $2=\"options=(\${(j: :)_fzf_opts})\"; }"
+      }xe;
+    '
+  )
+fi
 
 # zoxide provides the `z` shell command/function.
 if command -v zoxide >/dev/null 2>&1; then
