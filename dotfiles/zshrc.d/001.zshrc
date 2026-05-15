@@ -18,6 +18,13 @@ esac
 # Cursor and Code CLI shortcuts
 alias cursor="open -a Cursor"
 alias code="open -a Visual\ Studio\ Code"
+
+# Initialize the completion system before any tool emits `#compdef ...` scripts
+# via eval. uv/uvx/mise completions below rely on `compdef` being defined.
+fpath=(/Users/doug/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 
@@ -72,11 +79,8 @@ fi
 
 alias lg='lazygit'
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/doug/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
+# Docker CLI completions: fpath entry is added at the top of this file, where
+# compinit runs. Nothing else needed here.
 
 # Gangway tab completion
 [ -f "/Users/doug/.config/gangway/completions.zsh" ] && source "/Users/doug/.config/gangway/completions.zsh"
