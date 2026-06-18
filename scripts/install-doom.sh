@@ -11,12 +11,32 @@ set -euo pipefail
 log() { printf "[doom] %s\n" "$*"; }
 
 EMACS_DIR="$HOME/.config/emacs"
-DOOM_REPO="https://github.com/doomemacs/doomemacs"
+DOOM_REPO="https://github.com/doomemacs/core"
 DOOM_BIN="$EMACS_DIR/bin/doom"
 USER_DOOM_DIR_XDG="$HOME/.config/doom"
 USER_DOOM_DIR_LEGACY="$HOME/.doom.d"
 LEGACY_EMACS_DIR="$HOME/.emacs.d"
 FRESH_INSTALL=false
+
+# Writes the thin redirect shim only if the target is missing or differs, so a
+# stale file (e.g. a verbatim copy of Doom's own early-init.el left over from a
+# previous install) gets corrected instead of silently kept. A stale copy of
+# Doom's bootstrapper here boots Doom in the wrong order and crashes startup
+# with "(void-variable doom-modules)".
+write_shim() {
+  local target="$1" desired="$2"
+  if [[ -e "$target" ]] && [[ "$(cat "$target")" == "$desired" ]]; then
+    return 0
+  fi
+  if [[ -e "$target" ]]; then
+    local backup="${target}.bak-$(date +%Y%m%d%H%M%S)"
+    log "Replacing stale $target (backup: $backup)"
+    cp "$target" "$backup"
+  else
+    log "Creating $target bootstrap to load Doom from ~/.config/emacs"
+  fi
+  printf '%s\n' "$desired" >"$target"
+}
 
 ensure_xdg_emacs_bootstrap() {
   local early_init="${LEGACY_EMACS_DIR}/early-init.el"
@@ -25,27 +45,17 @@ ensure_xdg_emacs_bootstrap() {
   [[ -d "$LEGACY_EMACS_DIR" ]] || return 0
   [[ -L "$LEGACY_EMACS_DIR" ]] && return 0
 
-  if [[ ! -e "$early_init" ]]; then
-    log "Creating $early_init bootstrap to load Doom from ~/.config/emacs"
-    cat >"$early_init" <<'EOF'
-;; Bootstrap Doom Emacs from XDG config when ~/.emacs.d exists.
+  write_shim "$early_init" ';; Bootstrap Doom Emacs from XDG config when ~/.emacs.d exists.
 (setq user-emacs-directory (expand-file-name "~/.config/emacs/"))
 (let ((bootstrap (expand-file-name "early-init.el" user-emacs-directory)))
   (when (file-exists-p bootstrap)
-    (load bootstrap nil 'nomessage)))
-EOF
-  fi
+    (load bootstrap nil '\''nomessage)))'
 
-  if [[ ! -e "$init_file" ]]; then
-    log "Creating $init_file bootstrap to load Doom from ~/.config/emacs"
-    cat >"$init_file" <<'EOF'
-;; Bootstrap Doom Emacs from XDG config when ~/.emacs.d exists.
+  write_shim "$init_file" ';; Bootstrap Doom Emacs from XDG config when ~/.emacs.d exists.
 (setq user-emacs-directory (expand-file-name "~/.config/emacs/"))
 (let ((bootstrap (expand-file-name "init.el" user-emacs-directory)))
   (when (file-exists-p bootstrap)
-    (load bootstrap nil 'nomessage)))
-EOF
-  fi
+    (load bootstrap nil '\''nomessage)))'
 }
 
 if [[ ! -d "$EMACS_DIR/.git" ]]; then
@@ -55,9 +65,13 @@ if [[ ! -d "$EMACS_DIR/.git" ]]; then
     mv -v "$EMACS_DIR" "$EMACS_DIR.bak.$(date +%s)"
   fi
   log "Cloning Doom Emacs into $EMACS_DIR"
-  git clone --depth 1 "$DOOM_REPO" "$EMACS_DIR"
+  # --recurse-submodules pulls sources/doom+ (the doomemacs/modules submodule);
+  # since v2.1 modules live in a separate repo and are missing without this.
+  git clone --depth 1 --recurse-submodules "$DOOM_REPO" "$EMACS_DIR"
 else
   log "Doom Emacs repo exists"
+  # Ensure the modules submodule is present/updated on existing installs too.
+  git -C "$EMACS_DIR" submodule update --init --recursive || true
 fi
 
 if [[ "$FRESH_INSTALL" == true && -d "$USER_DOOM_DIR_LEGACY" && ! -e "$USER_DOOM_DIR_XDG" ]]; then
