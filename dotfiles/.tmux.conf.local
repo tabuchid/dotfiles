@@ -391,6 +391,14 @@ set -g mouse on
 
 # Shift+Enter passthrough for Claude Code (CSI u encoding)
 set -as terminal-features 'tmux-256color:extkeys'
+
+# Use the modern tmux terminfo so truecolor + OSC sequences are handled
+set -g default-terminal "tmux-256color"
+
+# Advertise OSC 8 hyperlink + truecolor support so tmux forwards them to WezTerm
+# instead of stripping them (makes Markdown links from Claude Code clickable)
+set -as terminal-features 'tmux-256color:hyperlinks:RGB'
+set -as terminal-features 'xterm-256color:hyperlinks:RGB'
 bind-key -n S-Enter send-keys Escape "[13;2u"
 
 # force Vi mode
