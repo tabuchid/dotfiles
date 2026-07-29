@@ -129,3 +129,33 @@
   ;; "yaml" and trigger yamlls instead. Map our derived mode → "helm-ls".
   (add-to-list 'lsp-language-id-configuration
                '(doug/helm-template-mode . "helm-ls")))
+
+;; Markdown preview (grip-mode): GitHub-fidelity HTML preview, renders mermaid.
+;; `grip` is installed via `uv tool install grip` (shim in ~/.local/bin, on
+;; PATH), so grip-mode finds it by name. Toggle with the localleader binding
+;; below or `M-x grip-mode` in a markdown buffer; it opens a local server in
+;; the browser. Note: grip hits GitHub's API (60 req/hr unauthenticated). For
+;; docs/ this is fine; set `grip-github-user`/`grip-github-password` (a PAT) to
+;; raise the limit. Don't point grip at personal vault notes — it sends content
+;; to GitHub.
+(after! markdown-mode
+  (setq grip-preview-use-webkit t) ; render in-Emacs via xwidgets WebKit
+  (map! :map markdown-mode-map
+        :localleader
+        :desc "Grip preview" "g" #'grip-mode))
+
+;; Obsidian vault awareness: follow [[wikilinks]], vault-scoped search/jump.
+;; Local-only, no network. Scoped to the LifeHQ vault.
+;; `obsidian-directory` must be set via :custom (setopt semantics) — its `:set`
+;; handler validates the path and runs initialization; plain `setq` skips that.
+(use-package! obsidian
+  :custom
+  (obsidian-directory
+   "/Users/doug/Library/Mobile Documents/iCloud~md~obsidian/Documents/Doug LifeHQ 2.0.5")
+  :config
+  (global-obsidian-mode t)
+  (map! :map obsidian-mode-map
+        :localleader
+        :desc "Follow link at point" "f" #'obsidian-follow-link-at-point
+        :desc "Jump to note"         "j" #'obsidian-jump
+        :desc "Insert wikilink"      "l" #'obsidian-insert-wikilink))

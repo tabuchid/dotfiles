@@ -10,6 +10,12 @@
 ;; (package! some-package)
 (package! mise)
 
+;; Markdown preview: grip-mode renders GitHub-flavored markdown (incl. mermaid)
+;; via GitHub's API for high-fidelity preview of docs/. obsidian.el adds
+;; wikilink navigation and vault-scoped search for the Obsidian vault.
+(package! grip-mode)
+(package! obsidian)
+
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
