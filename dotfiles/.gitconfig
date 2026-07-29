@@ -2,8 +2,7 @@
   user = tabuchid
 
 [user]
-  name = Doug Tabuchi
-  email = doug@dougtabuchi.com
+  useConfigOnly = true
 
 [color]
   ui = auto
@@ -39,9 +38,10 @@
   tags = tag -l
   branches = branch --all
   remotes = remote --verbose
+	dft = difftool --tool=difftastic
 
 [core]
-  pager = less -RFX
+	pager = delta
 
 [push]
   default = simple
@@ -59,3 +59,43 @@
 	autoStash = true
 [init]
 	defaultBranch = main
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[delta]
+	side-by-side = true
+	navigate = true
+[interactive]
+	diffFilter = delta --color-only
+[diff]
+	tool = difftastic
+[difftool "difftastic"]
+	cmd = difft \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[credential "http://localhost:3030"]
+	provider = generic
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+
+# Identity routing. Must stay last in this file: includes are spliced in at
+# their own position, so a [user] stanza below one would override it.
+# Personal is the default; the Buoy conditions below override it where they
+# match. gitdir/i because APFS is case-insensitive.
+[include]
+	path = ~/.config/git/identity-personal.inc
+
+[includeIf "hasconfig:remote.*.url:git@github.com:BuoySoftware/**"]
+	path = ~/.config/git/identity-buoy.inc
+[includeIf "hasconfig:remote.*.url:https://github.com/BuoySoftware/**"]
+	path = ~/.config/git/identity-buoy.inc
+[includeIf "hasconfig:remote.*.url:ssh://git@github.com/BuoySoftware/**"]
+	path = ~/.config/git/identity-buoy.inc
+
+[includeIf "gitdir/i:~/Developer/BuoySoftware/"]
+	path = ~/.config/git/identity-buoy.inc
