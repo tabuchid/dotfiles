@@ -54,7 +54,7 @@ unlink_emacs_mac_if_linked() {
   target="$(readlink "${emacs_link}")"
 
   if [[ "${target}" == *"emacs-mac"* ]]; then
-    log "Unlinking emacs-mac to avoid emacs-plus@30 link conflicts"
+    log "Unlinking emacs-mac to avoid emacs-plus@31 link conflicts"
     brew unlink emacs-mac || true
   fi
 }
@@ -130,22 +130,34 @@ link_emacs_plus_build_config() {
   ln -sv "${src}" "${dst}"
 }
 
+# The /Applications copy shadows the Cellar build for the `emacs` wrapper, so
+# it must be refreshed on version change, not just created when missing.
+app_bundle_version() {
+  /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$1/Contents/Info.plist" 2>/dev/null
+}
+
+sync_app_copy() {
+  local src="$1" dst="/Applications/$(basename "$1")"
+  [[ -d "$src" ]] || return 0
+
+  if [[ -e "$dst" ]]; then
+    if [[ "$(app_bundle_version "$src")" == "$(app_bundle_version "$dst")" ]]; then
+      return 0
+    fi
+    log "Refreshing stale $(basename "$dst") in /Applications ($(app_bundle_version "$dst") -> $(app_bundle_version "$src"))"
+    rm -rf "$dst"
+  else
+    log "Copying $(basename "$dst") to /Applications"
+  fi
+  cp -R "$src" "$dst"
+}
+
 setup_emacs_app() {
   local prefix
-  prefix="$(brew --prefix emacs-plus@30 2>/dev/null)" || return 0
+  prefix="$(brew --prefix emacs-plus@31 2>/dev/null)" || return 0
 
-  if ! command -v osascript >/dev/null 2>&1; then
-    return 0
-  fi
-
-  if [[ -d "$prefix/Emacs.app" && ! -e "/Applications/Emacs.app" ]]; then
-    log "Creating Emacs.app alias in /Applications"
-    osascript -e "tell application \"Finder\" to make alias file to posix file \"$prefix/Emacs.app\" at posix file \"/Applications\" with properties {name:\"Emacs.app\"}" || log "Skipping Emacs.app alias (Finder automation unavailable)"
-  fi
-  if [[ -d "$prefix/Emacs Client.app" && ! -e "/Applications/Emacs Client.app" ]]; then
-    log "Creating Emacs Client.app alias in /Applications"
-    osascript -e "tell application \"Finder\" to make alias file to posix file \"$prefix/Emacs Client.app\" at posix file \"/Applications\" with properties {name:\"Emacs Client.app\"}" || log "Skipping Emacs Client.app alias (Finder automation unavailable)"
-  fi
+  sync_app_copy "$prefix/Emacs.app"
+  sync_app_copy "$prefix/Emacs Client.app"
 }
 
 main() {

@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # NOTE: If you need to re-install emacs-plus (e.g. to change build flags):
-#   brew uninstall emacs-plus@30
-#   brew install d12frosted/emacs-plus/emacs-plus@30 --with-dbus --with-imagemagick --with-mailutils --with-xwidgets
+#   brew uninstall emacs-plus@31
+#   brew install d12frosted/emacs-plus/emacs-plus@31 --with-xwidgets
 #   Never use `brew reinstall` — it can fail during source builds.
 #   Then run: doom sync
 #   If changing major versions (e.g. @29 -> @30), also run: doom build

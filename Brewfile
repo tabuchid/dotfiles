@@ -130,7 +130,7 @@ brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
 # GNU Emacs text editor
-brew "d12frosted/emacs-plus/emacs-plus@30", args: ["with-dbus", "with-imagemagick", "with-mailutils", "with-xwidgets"]
+brew "d12frosted/emacs-plus/emacs-plus@31", args: ["with-xwidgets"]
 # A dev environment as code for microservice apps
 brew "tilt-dev/tap/tilt"
 # Command-line interface for 1Password

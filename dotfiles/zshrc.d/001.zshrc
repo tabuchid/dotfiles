@@ -63,6 +63,9 @@ fi
 # eval "$(~/.local/bin/cursor-agent shell-integration zsh)"
 
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
+
+# Doom Emacs CLI (Doom lives at ~/.config/emacs, the XDG path)
+export PATH="$HOME/.config/emacs/bin:$PATH"
 # opencode
 export PATH="$HOME/.opencode/bin:$PATH"
 
