@@ -38,3 +38,13 @@ dotfiles/**/config/gh/*
 
 # Machine-specific shell scripts
 dotfiles/zshrc.d/002-buoy-automation.zshrc
+
+# Local agent state, worktrees and generated output
+.worktrees/
+.audit/
+.scratch/
+tmp/
+__pycache__/
+*.pyc
+.venv/
+venv/
