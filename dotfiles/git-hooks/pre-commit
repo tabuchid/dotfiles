@@ -1,0 +1,40 @@
+#!/bin/sh
+# Refuse an agent commit on main or master, then chain to the repo-local hook.
+#
+# Humans (no agent marker) are unaffected: this hook only runs the chained
+# repo hook and exits with its status.
+#
+# A repo that sets its own core.hooksPath (husky, pre-commit, and similar)
+# overrides the global hooksPath, so Git never runs this script there.
+
+dir=$(CDPATH='' cd "$(dirname "$0")" && pwd -P) || exit 1
+# shellcheck disable=SC1091
+. "$dir/_agent-detect.sh"
+
+tool=$(agent_tool_name)
+
+if [ -n "$tool" ]; then
+  branch=$(git symbolic-ref --short -q HEAD || true)
+  case "$branch" in
+    main | master)
+      allow=0
+      if [ "${AGENT_ALLOW_MAIN:-}" = "1" ]; then
+        allow=1
+      else
+        configured=$(git config --get --bool agent.allowMainCommits 2>/dev/null || true)
+        if [ "$configured" = "true" ]; then
+          allow=1
+        fi
+      fi
+      if [ "$allow" -ne 1 ]; then
+        toplevel=$(git rev-parse --show-toplevel)
+        printf 'refusing agent (%s) commit on %s in %s: work on an agent/%s/<task> branch in a worktree (git worktree add -b agent/%s/<task> .worktrees/<task>). Override: AGENT_ALLOW_MAIN=1 or git config agent.allowMainCommits true\n' \
+          "$tool" "$branch" "$toplevel" "$tool" "$tool" >&2
+        exit 1
+      fi
+      ;;
+  esac
+fi
+
+run_chained_hook "$@"
+exit $?

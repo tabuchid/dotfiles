@@ -42,6 +42,12 @@
 
 [core]
 	pager = delta
+	# Global agent hooks. A repo-local core.hooksPath (husky, pre-commit, and
+	# similar) overrides this path, so Git never runs these hooks there.
+	# Only pre-commit and prepare-commit-msg live here. Other repo-local hook
+	# names (pre-push, post-merge, and so on) are not invoked while this
+	# hooksPath is set, unless that repo sets its own core.hooksPath.
+	hooksPath = ~/Developer/dotfiles/dotfiles/git-hooks
 
 [push]
   default = simple

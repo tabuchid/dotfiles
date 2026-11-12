@@ -1,0 +1,28 @@
+#!/bin/sh
+# Append an Agent: <tool> trailer to agent commits, then chain to the
+# repo-local hook.
+#
+# Still adds the trailer for merge and squash. Skips only when the message
+# is empty or the source ($2) is fixup. An existing Agent trailer is left
+# alone (git interpret-trailers --if-exists doNothing).
+#
+# A repo that sets its own core.hooksPath (husky, pre-commit, and similar)
+# overrides the global hooksPath, so Git never runs this script there.
+
+dir=$(CDPATH='' cd "$(dirname "$0")" && pwd -P) || exit 1
+# shellcheck disable=SC1091
+. "$dir/_agent-detect.sh"
+
+msg_file=${1:-}
+source_kind=${2:-}
+tool=$(agent_tool_name)
+
+if [ -n "$tool" ] && [ -n "$msg_file" ] && [ "$source_kind" != "fixup" ]; then
+  if [ -f "$msg_file" ] && grep -q '[^[:space:]]' "$msg_file"; then
+    git interpret-trailers --in-place --if-exists doNothing \
+      --trailer "Agent: $tool" "$msg_file" || exit 1
+  fi
+fi
+
+run_chained_hook "$@"
+exit $?
