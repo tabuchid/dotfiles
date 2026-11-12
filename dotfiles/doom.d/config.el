@@ -151,7 +151,7 @@
 (use-package! obsidian
   :custom
   (obsidian-directory
-   "/Users/doug/Library/Mobile Documents/iCloud~md~obsidian/Documents/Doug LifeHQ 2.0.5")
+   "/Users/tabuchid/Library/Mobile Documents/iCloud~md~obsidian/Documents/Doug LifeHQ 2.0.5")
   :config
   (global-obsidian-mode t)
   (map! :map obsidian-mode-map

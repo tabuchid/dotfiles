@@ -35,6 +35,8 @@ brew "erlang"
 brew "extract_url"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# GNU find, locate, updatedb, and xargs utilities
+brew "findutils"
 # GNU compiler collection
 brew "gcc"
 # High performance message passing library
