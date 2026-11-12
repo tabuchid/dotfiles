@@ -13,3 +13,7 @@ DOTFILES_SECRETS_CACHE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles/secrets.
 if [[ -r "${DOTFILES_SECRETS_CACHE_FILE}" ]]; then
   source "${DOTFILES_SECRETS_CACHE_FILE}"
 fi
+
+if [[ -n "${GITHUB_PACKAGES_TOKEN}" ]]; then
+  export BUNDLE_RUBYGEMS__PKG__GITHUB__COM="tabuchid:${GITHUB_PACKAGES_TOKEN}"
+fi
