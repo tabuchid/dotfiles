@@ -16,7 +16,7 @@
 
 # Single source of truth for the iCloud vault path (spaces + ~ are why this
 # lives in a var instead of being retyped at every call site).
-export DOUG_VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Doug LifeHQ 2.0.5"
+export DOUG_VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Doug Wiki"
 export BUOY_CODE_TREE="$HOME/Developer/BuoySoftware"
 
 # Open agent view from the code tree with the vault added.
