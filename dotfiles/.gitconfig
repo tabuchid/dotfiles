@@ -99,3 +99,11 @@
 
 [includeIf "gitdir/i:~/Developer/BuoySoftware/"]
 	path = ~/.config/git/identity-buoy.inc
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
