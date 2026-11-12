@@ -376,6 +376,36 @@ if [ -n "${dir:-}" ]; then
   fi
 fi
 
+# 13. pass-through: repo-local pre-push (gets stdin), post-commit and post-merge still run
+dir=$(make_repo main) || fail "13 setup"
+if [ -n "${dir:-}" ]; then
+  remote="$TMP/remote13.git"
+  scrubbed git init -q --bare "$remote"
+  cat >"$dir/.git/hooks/pre-push" <<'EOF'
+#!/bin/sh
+while read -r local_ref _rest; do echo "prepush-stdin:$local_ref" >&2; done
+exit 1
+EOF
+  printf '#!/bin/sh\necho ran >"%s/pc13"\n' "$TMP" >"$dir/.git/hooks/post-commit"
+  printf '#!/bin/sh\necho ran >"%s/pm13"\n' "$TMP" >"$dir/.git/hooks/post-merge"
+  chmod +x "$dir/.git/hooks/pre-push" "$dir/.git/hooks/post-commit" "$dir/.git/hooks/post-merge"
+  out="$TMP/13.out"
+  if scrubbed git -C "$dir" push "$remote" main >"$out" 2>&1; then
+    fail "13 repo-local pre-push still blocks" "push succeeded"
+  elif grep -q 'prepush-stdin:refs/heads/main' "$out"; then
+    pass "13 repo-local pre-push still runs with stdin and blocks"
+  else
+    fail "13 repo-local pre-push still runs with stdin and blocks" "$(cat "$out")"
+  fi
+  scrubbed git -C "$dir" commit -q --allow-empty -m "human commit"
+  if [ -f "$TMP/pc13" ]; then pass "13 repo-local post-commit still runs"; else fail "13 repo-local post-commit still runs"; fi
+  scrubbed git -C "$dir" checkout -q -b side
+  scrubbed git -C "$dir" commit -q --allow-empty -m "side"
+  scrubbed git -C "$dir" checkout -q main
+  scrubbed git -C "$dir" merge -q --no-edit --no-ff side >/dev/null 2>&1
+  if [ -f "$TMP/pm13" ]; then pass "13 repo-local post-merge still runs"; else fail "13 repo-local post-merge still runs"; fi
+fi
+
 if [ "$failures" -ne 0 ]; then
   printf 'FAILED %s\n' "$failures"
   exit 1

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Pass-through for hook names with no global logic. A global core.hooksPath
+# hides .git/hooks, so this runs the repo-local hook of the same name (if any)
+# with the same args and stdin.
+dir=$(CDPATH='' cd "$(dirname "$0")" && pwd -P) || exit 1
+# shellcheck disable=SC1091
+. "$dir/_agent-detect.sh"
+run_chained_hook "$@"
+exit $?
