@@ -1,3 +1,11 @@
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  onepassword_agent_sock="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  if [[ -z "${SSH_AUTH_SOCK:-}" && -S "$onepassword_agent_sock" ]]; then
+    export SSH_AUTH_SOCK="$onepassword_agent_sock"
+  fi
+  unset onepassword_agent_sock
+fi
+
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
