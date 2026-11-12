@@ -4,6 +4,7 @@ A repeatable, documented setup for my macOS development environment.
 
 ## What this does
 - Restores Homebrew packages via `Brewfile`
+- Installs Codex CLI with OpenAI's official installer
 - Installs WezTerm as the primary terminal emulator
 - Installs `SF Mono` from macOS Terminal.app resources into `~/Library/Fonts` (when available)
 - Clones zsh framework `zsh-quickstart-kit` and links `~/.zshrc`

@@ -90,6 +90,10 @@ install_doom_runtime_tools() {
   bash "${REPO_DIR}/scripts/install-doom-runtime-tools.sh"
 }
 
+install_codex_cli() {
+  bash "${REPO_DIR}/scripts/install-codex-cli.sh"
+}
+
 sync_editors() {
   "${REPO_DIR}/scripts/sync-editors.sh" || true
 }
@@ -155,6 +159,7 @@ main() {
   ensure_pkg_config_for_source_builds
   unlink_emacs_mac_if_linked
   restore_brew
+  install_codex_cli
   install_sf_mono
   setup_emacs_app
   install_zsh_framework
